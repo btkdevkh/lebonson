@@ -1,0 +1,40 @@
+.navbar {
+  background-color: #111111;
+  height: 50px;
+  margin-bottom: 15px;
+}
+
+.navbar .logo {
+  font-size: x-large;
+  color: white;
+  font-weight: bold;
+  font-family: 'Megrim', cursive;
+}
+
+.navbar a {
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.navbar a:hover {
+  color: lightblue;
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.offbar {
+  width: 3px;
+  height: 10px;
+  background-color: crimson;
+  font-weight: 007;
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

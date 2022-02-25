@@ -1,0 +1,22 @@
+.product-baskets {
+  max-width: 800px;
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+.product-baskets-list {
+  padding: 25px;
+  background-color: aliceblue;
+}
+
+.product-baskets-item {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.updateBtn, .deleteBtn {
+  cursor: pointer;
+}

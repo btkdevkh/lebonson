@@ -1,0 +1,21 @@
+.burger {
+  color: white;
+  cursor: pointer;
+}
+
+.burger div {
+  width: 30px;
+  height: 3px;
+  background-color: white;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  transition: all ease-in-out 0.5s;
+}
+
+.burger.open div:nth-child(1) {
+  transform: translateX(1000px);
+}
+
+.burger.open div:nth-child(3) {
+  transform: translateX(1000px);
+}

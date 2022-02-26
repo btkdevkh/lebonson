@@ -5,6 +5,7 @@ import { FaCircleNotch, FaGuitar, FaShoppingBasket } from 'react-icons/fa'
 import useUsers from '../../hooks/useUsers'
 import { useDispatch } from 'react-redux'
 import userActions from '../../actions/userActions'
+import { toast } from 'react-toastify';
 
 type Props = {
   isOpen: boolean
@@ -34,6 +35,7 @@ export default function Navbar({ isOpen, handleNavbarBurger }: Props) {
                 }}
                 onClick={() => {
                   dispatch(userActions.logOutUser())
+                  toast('Déconnecté')
                 }}
               >
                 <div className='offbar'></div>

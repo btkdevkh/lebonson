@@ -10,10 +10,8 @@ const AuthRequired = (WrappedComponent: ComponentType) => {
     const { user } = useUsers()
 
     useEffect(() => {
-      if(user == null) {
-        navigate('/')
-      } else {
-        navigate('/')
+      if(!user) {
+        navigate('/login')
       }
     }, [user, dispatch, navigate])
 

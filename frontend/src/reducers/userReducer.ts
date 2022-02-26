@@ -1,9 +1,9 @@
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT } from "../constants/userConstants";
+import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from "../constants/userConstants";
 import { IUser } from "../models/lebonson/User"
 
 interface Action {
   type: string
-  payload: IUser
+  payload: any|IUser
 }
 
 interface AuthInitialState {
@@ -14,7 +14,7 @@ interface AuthInitialState {
   message: string
 }
 
-const user = JSON.parse(localStorage.getItem('user') as string)
+const user = JSON.parse(localStorage.getItem('user') as string ?? null)
 
 const initialState: AuthInitialState = {
   user: user ?? null,
@@ -47,7 +47,6 @@ const userReducer = (state = initialState, action: Action) => {
         isSuccess: false,
         message: action.payload
       }
-
     case USER_LOGOUT:
       return {
         user: null,
@@ -55,6 +54,28 @@ const userReducer = (state = initialState, action: Action) => {
         isError: false,
         isSuccess: false,
         message: ''
+      }
+    case USER_REGISTER_REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case USER_REGISTER_SUCCESS:
+      return {
+        ...state,
+        user: action.payload,
+        isLoading: false,
+        isSuccess: true,
+        message: action.payload.message
+      }
+    case USER_REGISTER_FAIL:
+      return {
+        ...state,
+        user: null,
+        isLoading: false,
+        isError: true,
+        isSuccess: false,
+        message: action.payload
       }
     default:
       return state

@@ -35,9 +35,16 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('Erreur du serveur');
   }
 
+  const userRegistered = await UserModel.getOneUser(user.insertId);
+
   // Generate token
   const payload = { email: email, id: user.insertId }
-  res.status(201).json({ status: 201, message: "Votre compte a été créé avec success", token: generateToken(payload) });
+  res.status(201).json({ 
+    status: 201, 
+    message: "Votre compte a été créé avec success", 
+    token: generateToken(payload),
+    user: userRegistered
+  });
 })
 
 // @desc Get all user

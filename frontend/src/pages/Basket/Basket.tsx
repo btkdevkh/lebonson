@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { FaHome, FaShoppingBasket, FaUser } from "react-icons/fa";
-import BasketItem from "../../components/Basket/BasketItem";
+import BasketItem from "./BasketItem";
 import HeadingH2 from "../../components/Heading/HeadingH2";
 import SimpleLink from "../../components/Link/SimpleLink";
 import useBaskets from "../../hooks/useBaskets";

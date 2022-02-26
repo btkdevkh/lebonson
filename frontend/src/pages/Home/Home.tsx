@@ -1,9 +1,9 @@
-import ProductsList from "../../components/Product/ProductsList";
+import Products from "../Product/Products";
 
 export default function Home() {
   return (
-    <>
-      <ProductsList />
-    </>
+    <main>
+      <Products />
+    </main>
   )
 }

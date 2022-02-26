@@ -7,13 +7,15 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Basket from './pages/Basket/Basket';
 import Contact from './pages/Contact/Contact';
-import Product from './pages/Product/Product';
+import Products from './pages/Product/Products';
 import Register from './pages/Register/Register';
-import Password from './pages/Password/Password';
-import ProductDetails from './components/Product/ProductDetails';
+import ProductDetails from './pages/Product/ProductDetails';
 import NavbarLeft from './components/Navbar/NavbarLeft';
 import { useState } from 'react';
-import ProfilScreen from './pages/Profil/ProfilScreen';
+import Profil from './pages/Profil/Profil';
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import ForgotPassword from './pages/Password/ForgotPassword';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false)
@@ -22,6 +24,7 @@ function App() {
   const handleCloseNavbarLeft = () => setIsOpen(false)
 
   return (
+    <>
     <BrowserRouter>
       <Navbar 
         isOpen={isOpen} 
@@ -36,20 +39,22 @@ function App() {
         <div className="container">
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/compte' element={<ProfilScreen />} />
+            <Route path='/compte' element={<Profil />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
-            <Route path='/products' element={<Product />} />
+            <Route path='/products' element={<Products />} />
             <Route path='/product/details/:id' element={<ProductDetails />} />
             <Route path='/basket' element={<Basket />} />
             <Route path='/contact' element={<Contact />} />
-            <Route path='/reset/password_init_step' element={<Password />} />
+            <Route path='/forgot/password/step_one' element={<ForgotPassword />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </div>
       </div>
       <Footer />
     </BrowserRouter>
+    <ToastContainer />
+    </>
   );
 }
 

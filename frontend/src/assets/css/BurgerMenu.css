@@ -4,8 +4,8 @@
 }
 
 .burger div {
-  width: 30px;
-  height: 3px;
+  width: 25px;
+  height: 1.5px;
   background-color: white;
   margin-bottom: 5px;
   border-radius: 5px;
@@ -13,9 +13,16 @@
 }
 
 .burger.open div:nth-child(1) {
-  transform: translateX(1000px);
+  background-color: crimson;
+  transform: rotate(59deg) translateX(10px);
+}
+
+.burger.open div:nth-child(2) {
+  background-color: crimson;
+  transform: translateY(12px) translateX(-1px);
 }
 
 .burger.open div:nth-child(3) {
-  transform: translateX(1000px);
+  background-color: crimson;
+  transform: rotate(-59deg) translateY(-9px);
 }

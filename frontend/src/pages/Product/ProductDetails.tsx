@@ -1,12 +1,12 @@
 import '../../assets/css/ProductDetails.css'
 import { useParams } from 'react-router-dom'
 import { IProduct } from '../../models/lebonson/Product';
-import Spinner from '../Spinner/Spinner';
-import SelectQtyForm from '../Form/SelectQtyForm';
+import Spinner from '../../components/Spinner/Spinner';
+import SelectQtyForm from '../../components/Form/SelectQtyForm';
 import useProducts from '../../hooks/useProducts';
-import HeadingH2 from '../Heading/HeadingH2';
+import HeadingH2 from '../../components/Heading/HeadingH2';
 import { config } from '../../config';
-import SimpleLink from '../Link/SimpleLink';
+import SimpleLink from '../../components/Link/SimpleLink';
 import { FaHome, FaShoppingBasket } from 'react-icons/fa';
 
 export default function ProductDetails() {  

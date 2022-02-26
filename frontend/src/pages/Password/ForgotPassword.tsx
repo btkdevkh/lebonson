@@ -1,6 +1,6 @@
-import HeadingH2 from "../Heading/HeadingH2";
+import HeadingH2 from "../../components/Heading/HeadingH2";
 
-export default function ResetPasswordInitForm() {
+export default function ForgotPassword() {
   return (
     <>
       <form className="form-group">

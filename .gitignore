@@ -2,4 +2,4 @@ node_modules
 .env
 backend/sql
 
-frontend
+frontend/node_modules

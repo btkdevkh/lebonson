@@ -1,0 +1,12 @@
+.orders-container {
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.order-item {
+  padding: 25px;
+  margin-bottom: 15px;
+  background-color: aliceblue;
+}

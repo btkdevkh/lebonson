@@ -1,0 +1,16 @@
+.user-infos-container {
+  max-width: 600px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+.user-infos {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: aliceblue;
+  padding: 25px;
+  border-radius: 5px;
+}

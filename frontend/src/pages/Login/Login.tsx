@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
 import { FaKey, FaUser } from "react-icons/fa";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import userActions from "../../actions/userActions";
 import HeadingH2 from "../../components/Heading/HeadingH2";
 import SimpleLink from "../../components/Link/SimpleLink";
 import Spinner from "../../components/Spinner/Spinner";
-import useUsers from "../../hooks/useUsers";
+import useUser from "../../hooks/useUser";
 
 export default function Login() {
   const navigate = useNavigate()
-  const { user } = useUsers()
 
-  const dispatch = useDispatch()
-  const { isLoading, isError, isSuccess, message } = useUsers()
+  const { user, isLoading, isError, message, dispatch } = useUser()
   
   const [formData, setFormData] = useState({
     email: '',

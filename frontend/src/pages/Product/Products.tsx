@@ -4,10 +4,10 @@ import { IProduct } from "../../models/lebonson/Product"
 import Spinner from "../../components/Spinner/Spinner"
 import ProductItem from "./ProductItem"
 import HeadingH2 from '../../components/Heading/HeadingH2'
-import useProducts from '../../hooks/useProducts'
+import useProduct from '../../hooks/useProduct'
 
 export default function Products() {
-  const { products, isLoading } = useProducts()
+  const { products, isLoading } = useProduct()
 
   if(isLoading) return <Spinner />
 

@@ -15,7 +15,7 @@ export default function ProductItem({ product }: Props) {
         </div>
         <div className='product-item-description'>
           <h4>{product.title.length > 20 ? `${product.title.slice(0, 20).toLowerCase()}...` : product.title}</h4>
-          <p>Prix : <b>{product.price}€</b></p>
+          <p><b>{product.price.toFixed(2)}€</b></p>
           <p>{product.description.length > 50 ? `${product.description.slice(0, 40)}...` : product.description}</p>
         </div>
       </div>

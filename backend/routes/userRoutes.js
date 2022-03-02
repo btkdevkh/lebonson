@@ -10,18 +10,18 @@ const {
   resetUserPassEnd 
 } = require('../controllers/userController');
 const express = require('express')
-const withAuth = require("../middleware/withAuth");
+const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 router.post("/", registerUser)
-router.get("/", withAuth, getAllUser)
+router.get("/", protect, getAllUser)
 router.get("/:id", getOneUser)
-router.put("/update/:id", withAuth, updateOneUser)
-router.put("/update/role/:id", withAuth, updateUserRole)
-router.delete("/delete/:id", withAuth, deleteOneUser)
+router.put("/update/:id", protect, updateOneUser)
+router.put("/update/role/:id", protect, updateUserRole)
+router.delete("/delete/:id", protect, deleteOneUser)
 router.post("/login", loginUser)
-router.post('/reset_step_one', resetUserPassStepOne)
-router.put('/reset_end_step/:id', withAuth, resetUserPassEnd)
+router.post('/forgot/password/step_one', resetUserPassStepOne)
+router.put('/forgot/password/step_two/:id', resetUserPassEnd)
 
 module.exports = router;

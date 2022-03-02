@@ -45,7 +45,7 @@ a {
 }
 
 .mt {
-  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .mb {
@@ -122,6 +122,13 @@ select {
   color: crimson;
   font-weight: 700;
 }
+
+.success {
+  text-align: center;
+  color: darkgreen;
+  font-weight: 700;
+}
+
 
 /* Scrollbar */
 /* width */

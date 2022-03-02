@@ -1,7 +1,18 @@
+import { 
+  USER_LOGIN_FAIL, 
+  USER_LOGIN_REQUEST, 
+  USER_LOGIN_SUCCESS, 
+  USER_LOGOUT, 
+  USER_REGISTER_FAIL, 
+  USER_REGISTER_REQUEST, 
+  USER_REGISTER_SUCCESS, 
+  USER_UPDATE_FAIL, 
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS
+} from "../constants/userConstants"
 import { AppDispatch } from "../store"
-import { loginUserServiceApi, registerUserServiceApi } from '../api/userServiceApi'
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from "../constants/userConstants"
 import { IUser } from "../models/lebonson/User"
+import { loginUserServiceApi, registerUserServiceApi, updateUserServiceApi } from '../api/userServiceApi'
 
 const loginUser = (userData: IUser) => async (dispatch: AppDispatch) => {
   try {
@@ -11,8 +22,7 @@ const loginUser = (userData: IUser) => async (dispatch: AppDispatch) => {
 
     if(!data) return
 
-    localStorage.setItem('token', JSON.stringify(data.token))
-    localStorage.setItem('user', JSON.stringify(data.user))
+    localStorage.setItem('user', JSON.stringify(data))
 
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
 
@@ -35,13 +45,9 @@ const registerUser = (userData: any) => async (dispatch: AppDispatch) => {
 
     if(!data) return    
 
-    localStorage.setItem('token', JSON.stringify(data.token))
-    localStorage.setItem('user', JSON.stringify(data.user))
+    localStorage.setItem('user', JSON.stringify(data))
 
-    dispatch({ 
-      type: USER_REGISTER_SUCCESS, 
-      payload: data
-    })
+    dispatch({ type: USER_REGISTER_SUCCESS, payload: data })
 
   } catch (error: any) {
     const message = (
@@ -54,8 +60,30 @@ const registerUser = (userData: any) => async (dispatch: AppDispatch) => {
   }
 }
 
+const updateUser = (userData: any, userId: number) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch({ type: USER_UPDATE_REQUEST, payload: null })
+
+    const data = await updateUserServiceApi(userData, userId)    
+
+    if(!data) return    
+
+    localStorage.setItem('user', JSON.stringify(data))
+
+    dispatch({ type: USER_UPDATE_SUCCESS, payload: data })
+
+  } catch (error: any) {
+    const message = (
+      error.response && 
+      error.response.data && 
+      error.response.data.message
+    ) || error.message || error.toString()
+    
+    dispatch({ type: USER_UPDATE_FAIL, payload: message })
+  }
+}
+
 const logOutUser = () => async (dispatch: AppDispatch) => {
-  localStorage.removeItem('token')
   localStorage.removeItem('user')
 
   dispatch({ type: USER_LOGOUT, payload: null })
@@ -64,7 +92,8 @@ const logOutUser = () => async (dispatch: AppDispatch) => {
 const userActions = {
   loginUser,
   logOutUser,
-  registerUser
+  registerUser,
+  updateUser
 }
 
 export default userActions

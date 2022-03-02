@@ -4,21 +4,21 @@ const asyncHandler = require('express-async-handler')
 // This middleware will fire 
 // between client req & server res
 
-const withAuth = asyncHandler((req, res, next) => {
+const protect = asyncHandler(async (req, res, next) => {
   // Get token from header
   const token = req.headers['x-access-token'];
 
   // Check if no token
   if(token === undefined) {
     res.status(400);
-    throw new Error('Authentification requise')
+    throw new Error('Pas de token')
   }
 
   // Verify token
-  jwt.verify(token, process.env.JWT_SECRET || 'bella', (err, decode) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, decode) => {
     if(err) {
       res.status(400);
-      throw new Error('Authentification non valid')
+      throw new Error('Token non valide')
     }
 
     req.id = decode.id;
@@ -26,4 +26,4 @@ const withAuth = asyncHandler((req, res, next) => {
   })
 })
 
-module.exports = withAuth;
+module.exports = protect;

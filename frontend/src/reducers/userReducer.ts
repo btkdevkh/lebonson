@@ -1,4 +1,15 @@
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from "../constants/userConstants";
+import { 
+  USER_LOGIN_FAIL, 
+  USER_LOGIN_REQUEST, 
+  USER_LOGIN_SUCCESS, 
+  USER_LOGOUT, 
+  USER_REGISTER_FAIL, 
+  USER_REGISTER_REQUEST, 
+  USER_REGISTER_SUCCESS, 
+  USER_UPDATE_FAIL, 
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS
+} from "../constants/userConstants";
 import { IUser } from "../models/lebonson/User"
 
 interface Action {
@@ -17,11 +28,11 @@ interface AuthInitialState {
 const user = JSON.parse(localStorage.getItem('user') as string ?? null)
 
 const initialState: AuthInitialState = {
-  user: user ?? null,
+  user: user ? user.user : null,
   isLoading: false,
   isError: false,
   isSuccess: false,
-  message: ''
+  message: ""
 }
 
 const userReducer = (state = initialState, action: Action) => {
@@ -34,7 +45,7 @@ const userReducer = (state = initialState, action: Action) => {
     case USER_LOGIN_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload.user,
         isLoading: false,
         isSuccess: true
       }
@@ -47,14 +58,17 @@ const userReducer = (state = initialState, action: Action) => {
         isSuccess: false,
         message: action.payload
       }
+
     case USER_LOGOUT:
       return {
-        user: null,
+        ...state,
+        user: action.payload,
         isLoading: false,
         isError: false,
         isSuccess: false,
-        message: ''
+        message: 'Vous êtes bien déconnecté(e)'
       }
+
     case USER_REGISTER_REQUEST:
       return {
         ...state,
@@ -63,7 +77,7 @@ const userReducer = (state = initialState, action: Action) => {
     case USER_REGISTER_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload.user,
         isLoading: false,
         isSuccess: true,
         message: action.payload.message
@@ -77,6 +91,30 @@ const userReducer = (state = initialState, action: Action) => {
         isSuccess: false,
         message: action.payload
       }
+
+    case USER_UPDATE_REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case USER_UPDATE_SUCCESS:
+      return {
+        ...state,
+        user: action.payload.user,
+        isLoading: false,
+        isSuccess: true,
+        message: action.payload.message
+      }
+    case USER_UPDATE_FAIL:
+      return {
+        ...state,
+        user: null,
+        isLoading: false,
+        isError: true,
+        isSuccess: false,
+        message: action.payload
+      }
+
     default:
       return state
   }

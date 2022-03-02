@@ -1,5 +1,6 @@
 .product-details {
   max-width: 600px;
+  width: 100%;
   margin: auto;
   display: grid;
   grid-template-columns: repeat(1, 1fr);

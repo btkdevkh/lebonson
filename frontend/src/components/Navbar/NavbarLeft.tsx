@@ -1,14 +1,14 @@
 import '../../assets/css/NavbarLeft.css'
 import { NavLink } from "react-router-dom";
-import { FaHome, FaListAlt, FaPhoneAlt, FaShoppingBasket, FaSignInAlt, FaUserAlt } from 'react-icons/fa';
-import useUsers from '../../hooks/useUsers';
+import { FaHome, FaListAlt, FaPhoneAlt, FaShippingFast, FaShoppingBasket, FaSignInAlt, FaUserAlt } from 'react-icons/fa';
+import useUser from '../../hooks/useUser';
 
 type Props = {
   isOpen: boolean
 }
 
 export default function NavbarLeft({ isOpen }: Props) {  
-  const { user } = useUsers()
+  const { user } = useUser()
 
   return (
     <nav className={`navbar-left ${isOpen && 'open'}`}>
@@ -16,7 +16,10 @@ export default function NavbarLeft({ isOpen }: Props) {
         <div className='fa-flex'>
           <div><FaHome color='#ddd' /></div>
           { user ? (
-            <div><FaUserAlt color='#ddd' /></div>
+            <>
+              <div><FaUserAlt color='#ddd' /></div>
+              <div><FaShippingFast color='#ddd' /></div>
+            </>
           ) : (
             <div><FaSignInAlt color='#ddd' /></div>
           )}
@@ -29,9 +32,14 @@ export default function NavbarLeft({ isOpen }: Props) {
             <NavLink to={'/'}>Accueil</NavLink>
           </li>
           { user ? (
+            <>
             <li>
               <NavLink to={'/compte'}>Compte</NavLink>
             </li>
+            <li>
+              <NavLink to={'/orders'}>Commandes</NavLink>
+            </li>
+            </>
           ) : (
             <li>
               <NavLink to={'/login'}>S'identifier</NavLink>

@@ -1,9 +1,8 @@
 import { IProduct } from '../../models/lebonson/Product'
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import basketActions from '../../actions/basketActions';
-import { RootState } from '../../store';
 import { useNavigate } from 'react-router-dom';
+import useBasket from '../../hooks/useBasket';
 
 type Props = {
   product: IProduct
@@ -14,8 +13,7 @@ type ArrQtyNum = []
 export default function SelectQtyForm({ product }: Props) { 
   const navigate = useNavigate() 
   
-  const dispatch = useDispatch()
-  const { baskets } = useSelector((state: RootState) => state.basket)  
+  const { baskets, dispatch } = useBasket() 
   const basket = baskets.find((b: IProduct) => b.id === product.id)
 
   const [qty, setQty] = useState<string|number>(basket?.selectedQuantity ?? 1)

@@ -1,9 +1,8 @@
 import '../../assets/css/Navbar.css'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import BurgerMenu from '../Burger/BurgerMenu'
 import { FaCircleNotch, FaGuitar, FaShoppingBasket } from 'react-icons/fa'
-import useUsers from '../../hooks/useUsers'
-import { useDispatch } from 'react-redux'
+import useUser from '../../hooks/useUser'
 import userActions from '../../actions/userActions'
 import { toast } from 'react-toastify';
 
@@ -13,8 +12,8 @@ type Props = {
 }
 
 export default function Navbar({ isOpen, handleNavbarBurger }: Props) {
-  const dispatch = useDispatch()
-  const { user } = useUsers()
+  const { user, dispatch } = useUser()
+  const navigate = useNavigate()
 
   return (
     <>
@@ -35,7 +34,8 @@ export default function Navbar({ isOpen, handleNavbarBurger }: Props) {
                 }}
                 onClick={() => {
                   dispatch(userActions.logOutUser())
-                  toast('Déconnecté')
+                  toast.success('Vous êtes bien déconnecté(e)')
+                  navigate('/')
                 }}
               >
                 <div className='offbar'></div>

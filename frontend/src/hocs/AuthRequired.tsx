@@ -1,19 +1,17 @@
 import { ComponentType, Fragment, useEffect } from "react"
-import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import useUsers from "../hooks/useUsers"
+import useUser from "../hooks/useUser"
 
 const AuthRequired = (WrappedComponent: ComponentType) => {
   const AuthRequireData = (props: any) => {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const { user } = useUsers()
+    const { user } = useUser()
 
     useEffect(() => {
       if(!user) {
         navigate('/login')
       }
-    }, [user, dispatch, navigate])
+    }, [user, navigate])
 
     return (
       <Fragment>

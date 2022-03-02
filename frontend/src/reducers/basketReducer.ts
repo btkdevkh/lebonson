@@ -2,6 +2,7 @@ import {
   BASKET_ADD_FAIL, 
   BASKET_ADD_REQUEST, 
   BASKET_ADD_SUCCESS, 
+  BASKET_REMOVE_AFTER_PAID, 
   BASKET_REMOVE_FAIL, 
   BASKET_REMOVE_REQUEST, 
   BASKET_REMOVE_SUCCESS 
@@ -57,6 +58,13 @@ const basketReducer = (state = initialState, action: Action) => {
         isLoading: true,
       }
     case BASKET_REMOVE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        isSuccess: true,
+        baskets: action.payload
+      }
+    case BASKET_REMOVE_AFTER_PAID:
       return {
         ...state,
         isLoading: false,

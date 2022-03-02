@@ -2,22 +2,19 @@ import '../../assets/css/Basket.css'
 import { IProduct } from "../../models/lebonson/Product"
 import { FaPenAlt, FaTrash } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import useBaskets from '../../hooks/useBaskets'
-import { useDispatch } from 'react-redux'
+import useBasket from '../../hooks/useBasket'
 import basketActions from '../../actions/basketActions'
-import useProducts from '../../hooks/useProducts'
+import useProduct from '../../hooks/useProduct'
 
 type Props = {
   basket: IProduct
-  idx: number
 }
 
-export default function BasketItem({ basket, idx }: Props) {
-  const dispatch = useDispatch()
-  const { baskets } = useBaskets()
-  const { products } = useProducts()
+export default function BasketItem({ basket }: Props) {
+  const { baskets, dispatch } = useBasket()
+  const { products } = useProduct()
 
-  const realBaskets: IProduct = products.find((p: IProduct) => p.id === basket.id)  
+  const realBaskets: IProduct = products.find((p: IProduct) => p.id === basket.id)    
 
   let TVA = 0.5
   const handleDeleteFromBaskets = (id: number) => {

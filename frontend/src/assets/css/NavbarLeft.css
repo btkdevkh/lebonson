@@ -1,5 +1,5 @@
 .navbar-left {
-  padding-top: 35px;
+  padding-top: 40px;
   background-color: rgba(0,0,0,0.96);
   width: 50%;
   position: absolute;
@@ -46,6 +46,12 @@
 }
 
 @media (min-width: 750px) {
+  .navbar-left {
+    width: 35%;
+  }
+}
+
+@media (min-width: 950px) {
   .navbar-left {
     width: 25%;
   }

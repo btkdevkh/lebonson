@@ -8,7 +8,7 @@ const {
   createProduct
 } = require("../controllers/productController");
 const express = require("express");
-const withAuth = require("../middleware/withAuth");
+const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
@@ -16,8 +16,8 @@ router.get("/", getAllProducts)
 router.get("/:id", getOneProduct)
 router.post('/image', saveProductImage)
 router.get("/order/:id", getProductByOrder)
-router.post("/create", withAuth, createProduct)
-router.put("/update/:id", withAuth, updateOneProduct)
-router.delete("/delete/:id", withAuth, deleteOneProduct)
+router.post("/create", protect, createProduct)
+router.put("/update/:id", protect, updateOneProduct)
+router.delete("/delete/:id", protect, deleteOneProduct)
 
 module.exports = router

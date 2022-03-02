@@ -1,19 +1,16 @@
 const OrderModel = require("../models/OrderModel");
 const OrderDetailModel = require("../models/OrderDetailModel");
 const ProductModel = require("../models/ProductModel");
-const stripe = require('stripe')(process.env.SK_TEST);
 const asyncHandler = require('express-async-handler')
+const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
 // @desc Create order
 // @route POST /api/v1/order/create
 // @access PRIVATE
 const createOrder = asyncHandler(async (req, res) => {
-  // Inital total amount
-  let totalAmount = 0;
+  let totalAmounts = 0;
 
-  // First, create order cart
-  const order = await OrderModel.createOrder(req.body.user_id, totalAmount);
-  // console.log(order);
+  const order = await OrderModel.createOrder(req.body.user_id, totalAmounts);
 
   if(!order) {
     res.status(500)
@@ -21,46 +18,71 @@ const createOrder = asyncHandler(async (req, res) => {
   }
 
   let order_id = order.insertId
-  // console.log(order_id);
 
-  // Get products from the client cart
   let products = req.body.products;
-  // console.log(products);
 
-  // Loop throught products
-  await Promise.all(products.map(async(product, idx) => {
-    // console.log(product);
-
+  await Promise.all(products.map(async(product) => {
     let productInfo = await ProductModel.getOneProduct(product.id);
 
+    // TVA
+    let TVA = 0.5
+
     // Total price HT
-    let total = parseInt(product.selectedQuantity) * parseFloat(productInfo[0].price);
-    // Price TVA
-    const taxPrice = Number((0.15 * total).toFixed(2));
-    // Total TTC
-    const totalPrice = total + taxPrice
-    totalAmount += totalPrice;
+    let totalEachHT = Number(productInfo[0].price) * Number(product.selectedQuantity);
 
-    // Second, save each product in order detail
-    await OrderDetailModel.createOrderDetail(order_id, product.id, product.selectedQuantity, total);
-    // console.log("ORDER DETAIL", orderDetail);
+    let totaEachlTTC = (TVA * Number(product.selectedQuantity) + totalEachHT)
 
-    // Update total amount
-    let updateTotalAmount = await OrderModel.updateTotalAmount(totalAmount, order_id);
-    console.log(updateTotalAmount);
+    totalAmounts += totaEachlTTC;
+
+    await OrderDetailModel.createOrderDetail(order_id, product.id, product.selectedQuantity, totalEachHT);
+    await OrderModel.updateTotalAmount(totalAmounts, order_id);
   }))
 
   res.status(200).json({ status: 200, message: "Order created", order: order, order_id: order_id });
 })
 
-// @desc Create order payment
-// @route POST /api/v1/order/payment
+// @desc Create order checkout payment
+// @route POST /create-checkout-session
 // @access PRIVATE
 const createOrderPayment = asyncHandler(async(req, res, next) => {
-  console.log(req.body);
+  try {
+    let TVA = 0.5
+    let products = req.body.products;
+    let orderId = req.body.order_id;
 
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      line_items: await Promise.all(products.map(async product =>  {
+        let productInfo = await ProductModel.getOneProduct(product.id);
+
+        return {
+          price_data: {
+            currency: 'eur',
+            product_data: {
+              name: product.title
+            },
+            unit_amount: Number(productInfo[0].price + TVA) * 100
+          },
+          quantity: Number(product.selectedQuantity)
+        }
+      })),
+      success_url: `${process.env.CLIENT_URL}/success?o_id=${Number(orderId)}`,
+      cancel_url: `${process.env.CLIENT_URL}/`,
+    })
+
+    res.status(200).json({ url: session.url })
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+})
+
+// Func no-call anywhere, just compare with the new one above: ↑
+// @desc Create order checkout payment
+// @route POST /api/v1/order/payment
+// @access PRIVATE
+const createOrderPaymentOldVersion = asyncHandler(async(req, res, next) => {
   let order = await OrderModel.getOneOrder(req.body.order_id);
-  console.log("ORDER", order);
 
   if(!order[0]) {
     res.status(500)
@@ -95,28 +117,18 @@ const validateOrder = asyncHandler(async(req, res, next) => {
   }
 
   let productsOrdered = await ProductModel.getProductsByOrderId(req.body.order_id)
-  console.log("PRODUCT ORDERED", productsOrdered);
 
   if(!productsOrdered) {
     res.status(500);
     throw new Error('Server error');
   }
 
-  productsOrdered.map(async(product, idx) => {
+  productsOrdered.map(async(product) => {
     let newQantity = parseInt(product.quantity) - parseInt(product.selectedQty);
-
-    let result = await ProductModel.changeProductQuantity(newQantity, product.product_id);
-    console.log(result);
+    await ProductModel.changeProductQuantity(newQantity, product.product_id);
   })
 
-  const products = await ProductModel.getAllProducts();
-
-  if(!products) {
-    res.status(500).json({ err: products })
-    throw new Error('Server error');
-  }
-
-  res.status(200).json({ status: 200, message: "status validé", products: products });
+  res.status(200).json({ status: 200, message: "status validé" });
 })
 
 // @desc Get all order
@@ -139,7 +151,6 @@ const getAllOrders = asyncHandler(async (req, res) => {
 const getOrderDetailsByUser = asyncHandler(async (req, res) => {
   const id = req.params.id
   const ordersByUserId = await OrderModel.getAllOrdersByUserId(id);
-  console.log(ordersByUserId);
 
   if(!ordersByUserId) {
     res.status(500);
@@ -223,5 +234,6 @@ module.exports = {
   getOneOrder,
   updateOneOrder,
   deleteOneOrder,
-  getOrderDetailsByOrderCart
+  getOrderDetailsByOrderCart,
+  createOrderPaymentOldVersion
 }

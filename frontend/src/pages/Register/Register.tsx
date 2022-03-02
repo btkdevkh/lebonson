@@ -1,8 +1,7 @@
 import { FaUser } from 'react-icons/fa'
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import useUsers from "../../hooks/useUsers";
+import useUser from "../../hooks/useUser";
 import userActions from "../../actions/userActions";
 import { toast } from 'react-toastify';
 import Spinner from '../../components/Spinner/Spinner';
@@ -12,8 +11,7 @@ import SimpleLink from '../../components/Link/SimpleLink';
 export default function Register() {
   const navigate = useNavigate()
 
-  const dispatch = useDispatch()
-  const { user, isLoading, isError, isSuccess, message } = useUsers()
+  const { user, isLoading, isError, isSuccess, message, dispatch } = useUser()
   
   const [formData, setFormData] = useState({
     firstName: '',

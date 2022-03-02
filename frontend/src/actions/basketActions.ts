@@ -2,6 +2,7 @@ import {
   BASKET_ADD_FAIL, 
   BASKET_ADD_REQUEST, 
   BASKET_ADD_SUCCESS, 
+  BASKET_REMOVE_AFTER_PAID, 
   BASKET_REMOVE_FAIL, 
   BASKET_REMOVE_REQUEST, 
   BASKET_REMOVE_SUCCESS 
@@ -67,9 +68,15 @@ const removeFromBasket = (id: number, baskets: IProduct[]) => async (dispatch: A
   }
 }
 
+const removeFromBasketAfterPaid = () => async (dispatch: AppDispatch) => {  
+  localStorage.removeItem('baskets')
+  dispatch({ type: BASKET_REMOVE_AFTER_PAID, payload: null})
+}
+
 const basketActions = {
   addToBasket,
-  removeFromBasket
+  removeFromBasket,
+  removeFromBasketAfterPaid
 }
 
 export default basketActions

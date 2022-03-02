@@ -1,6 +1,10 @@
-import { getProducts } from "../api/productServiceApi"
-import { PRODUCTS_LIST_FAIL, PRODUCTS_LIST_REQUEST, PRODUCTS_LIST_SUCCESS } from "../constants/productConstants"
+import { 
+  PRODUCTS_LIST_FAIL, 
+  PRODUCTS_LIST_REQUEST, 
+  PRODUCTS_LIST_SUCCESS 
+} from "../constants/productConstants"
 import { AppDispatch } from "../store"
+import { getProducts } from "../api/productServiceApi"
 
 const loadProducts = () => async (dispatch: AppDispatch) => {
   try {

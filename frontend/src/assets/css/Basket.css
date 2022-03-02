@@ -1,11 +1,13 @@
 .product-baskets {
   max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0 auto 15px auto;
   font-weight: bold;
 }
 
 .product-baskets-list {
   padding: 25px;
+  border-radius: 5px;
   background-color: aliceblue;
 }
 
@@ -14,7 +16,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 25px;
 }
 
 .updateBtn, .deleteBtn {

@@ -13,7 +13,6 @@ class ProductModel {
     return db.query("SELECT * FROM product")
       .then(res => res)
       .catch(err => err)
-    
   }
 
   static getOneProduct(id) {

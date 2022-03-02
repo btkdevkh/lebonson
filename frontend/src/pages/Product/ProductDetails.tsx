@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { IProduct } from '../../models/lebonson/Product';
 import Spinner from '../../components/Spinner/Spinner';
 import SelectQtyForm from '../../components/Form/SelectQtyForm';
-import useProducts from '../../hooks/useProducts';
+import useProduct from '../../hooks/useProduct';
 import HeadingH2 from '../../components/Heading/HeadingH2';
 import { config } from '../../config';
 import SimpleLink from '../../components/Link/SimpleLink';
@@ -11,7 +11,7 @@ import { FaHome, FaShoppingBasket } from 'react-icons/fa';
 
 export default function ProductDetails() {  
   const { id } = useParams()
-  const { products, isLoading } = useProducts() 
+  const { products, isLoading } = useProduct() 
 
   const product: IProduct = products && products.find((product: IProduct) => product.id === Number(id))  
   
@@ -30,7 +30,7 @@ export default function ProductDetails() {
                 <img src={config.API_IMG + product.image} alt={product.title} />
               </div>
               <div className='product-details-description'>
-                <p>{product.description}</p>
+                {product.description.split('\n').map((str, idx) => <p key={idx}>{str}</p>)}
               </div>
             </div>
             <p className='mb'><b>{product.price.toFixed(2)}€</b></p>

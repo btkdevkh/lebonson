@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt')
 const mysql = require('../config/db')
 
 let db;

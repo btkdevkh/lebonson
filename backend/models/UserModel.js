@@ -1,8 +1,14 @@
 const mysql = require('../config/db')
-const bcrypt = require('bcrypt');
 
 let db;
-mysql.then(conn => db = conn)
+
+mysql.then(conn => {
+  setInterval(async() => {
+    await conn.query("SELECT 1");
+  }, 10000);
+
+  db = conn
+})
 
 const saltRounds = 10;
 

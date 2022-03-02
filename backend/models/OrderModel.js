@@ -1,6 +1,14 @@
 const mysql = require('../config/db')
+
 let db;
-mysql.then(conn => db = conn)
+
+mysql.then(conn => {
+  setInterval(async() => {
+    await conn.query("SELECT 1");
+  }, 10000);
+
+  db = conn
+})
 
 class OrderModel {
   static createOrder(user_id, totalAmount) {

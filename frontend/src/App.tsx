@@ -36,10 +36,9 @@ function App() {
       />
       <NavbarLeft 
         isOpen={isOpen} 
+        handleCloseNavbarLeft={handleCloseNavbarLeft}
       />
-      <div className="App" 
-        onClick={handleCloseNavbarLeft}
-      >
+      <div className="App">
         <div className="container">
           <Routes>
             <Route path='/' element={<Home />} />

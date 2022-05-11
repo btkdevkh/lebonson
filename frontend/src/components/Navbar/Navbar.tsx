@@ -51,7 +51,10 @@ export default function Navbar({ isOpen, handleNavbarBurger }: Props) {
             </NavLink>
             <BurgerMenu 
               isOpen={isOpen} 
-              handleNavbarBurger={handleNavbarBurger} 
+              handleNavbarBurger={() => {
+                handleNavbarBurger()
+                document.body.style.overflow = 'hidden'
+              }} 
             />
           </div>
         </div>

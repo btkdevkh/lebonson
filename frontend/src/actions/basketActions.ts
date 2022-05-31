@@ -14,21 +14,16 @@ const addToBasket = (product: IProduct, selectedQty: number, baskets: IProduct[]
   try {
     dispatch({ type: BASKET_ADD_REQUEST, payload: null})
 
-    let isAlready = false;
-    for(let i = 0; i < baskets.length; i++) {
-      if(baskets[i].id === Number(product.id)) {
-        baskets[i].selectedQuantity = selectedQty;
-  
-        isAlready = true;
-      }
-    }
-
-    if(isAlready === false) {
-      product.selectedQuantity = selectedQty;
+    const productAlreadyExist = baskets.find(b => b.id === product.id)
+    
+    if(productAlreadyExist) {
+      productAlreadyExist.selectedQuantity = selectedQty
+    } else {
+      product.selectedQuantity = selectedQty
       baskets.push(product)
     }
 
-    dispatch({ type: BASKET_ADD_SUCCESS, payload: baskets})
+    dispatch({ type: BASKET_ADD_SUCCESS, payload: baskets })
 
     localStorage.setItem('baskets', JSON.stringify(baskets))
     
@@ -47,15 +42,11 @@ const removeFromBasket = (id: number, baskets: IProduct[]) => async (dispatch: A
   try {
     dispatch({ type: BASKET_REMOVE_REQUEST, payload: null})
 
-    for(let i = 0; i < baskets.length; i++) {
-      if(baskets[i].id === Number(id)) {
-        baskets.splice(i, 1)
-      }
-    }
+    const productToRemoveFromBaskets = baskets.filter(b => b.id !== id)
 
-    localStorage.setItem('baskets', JSON.stringify(baskets))
+    localStorage.setItem('baskets', JSON.stringify(productToRemoveFromBaskets))
 
-    dispatch({ type: BASKET_REMOVE_SUCCESS, payload: baskets})
+    dispatch({ type: BASKET_REMOVE_SUCCESS, payload: productToRemoveFromBaskets})
     
   } catch (error: any) {
     const message = (

@@ -21,6 +21,11 @@
   border-radius: 10px;
 }
 
+.basket form {
+  display: flex;
+  gap: 10px;
+}
+
 .product-details-description {
   display: flex;
   flex-direction: column;

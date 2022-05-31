@@ -30,7 +30,7 @@ export default function ProductDetails() {
                 <img src={config.API_IMG + product.image} alt={product.title} />
               </div>
               <div className='product-details-description'>
-                {product.description.split('\n').map((str, idx) => <p key={idx}>{str}</p>)}
+                {product.description.split('\n').map((str, idx) => <p key={idx}>{str.length ? `* ${str}` : str}</p>)}
               </div>
             </div>
             <p className='mb'><b>{product.price.toFixed(2)}€</b></p>

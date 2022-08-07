@@ -38,3 +38,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.fa-user-shield {
+  font-size: 1.3rem;
+  color: green;
+}

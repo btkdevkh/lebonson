@@ -1,6 +1,6 @@
 import '../../assets/css/Payment.css'
 import Basket from "../Basket/Basket";
-import Profil from "../Profil/Profil";
+import Profile from "../Profil/Profile";
 import SimpleLink from "../../components/Link/SimpleLink";
 import { FaHome, FaRegCreditCard } from "react-icons/fa";
 import useUser from "../../hooks/useUser";
@@ -41,7 +41,7 @@ export default function Payment() {
       <SimpleLink to='/' className='mb'><FaHome /> Retour</SimpleLink>
       <div className="payment-flex">
         <Basket />
-        <Profil />
+        <Profile />
       </div>
 
       <br />

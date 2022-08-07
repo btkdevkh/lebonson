@@ -47,7 +47,7 @@ export default function NavbarLeft({ isOpen, handleCloseNavbarLeft }: Props) {
             { user ? (
               <>
               <li>
-                <NavLink to={'/compte'}>Compte</NavLink>
+                <NavLink to={'/account'}>Compte</NavLink>
               </li>
               <li>
                 <NavLink to={'/orders'}>Commandes</NavLink>

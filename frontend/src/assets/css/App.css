@@ -44,6 +44,10 @@ a {
   text-decoration: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 .mt {
   margin-top: 15px;
 }
@@ -129,6 +133,21 @@ select {
   font-weight: 700;
 }
 
+table {
+  width: 100%;
+  text-align: center;
+}
+thead {
+  background-color: #000000;
+  color: white;
+}
+th {
+  padding: 5px;
+}
+td {
+  background-color: aliceblue;
+  padding: 5px;
+}
 
 /* Scrollbar */
 /* width */

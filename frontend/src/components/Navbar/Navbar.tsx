@@ -21,14 +21,23 @@ export default function Navbar({ isOpen, handleNavbarBurger }: Props) {
         <div className="container">
           <Link to={'/'} className="logo"><FaGuitar size={19} /> lebonson</Link>
           <div style={{
-            display: 'flex',
-            alignItems: 'center'
-          }}>
+              display: 'flex',
+              alignItems: 'center',
+              gap: '20px'
+            }}
+          >
+
+            {user && user.role === 'Admin' && (
+              <li>
+                <NavLink to={'/admin'} title="Administration">
+                  <i className="fas fa-user-shield"></i>
+                </NavLink>
+              </li>
+            )}
 
             { user && (
               <div 
                 style={{ 
-                  marginRight: '20px',
                   cursor: 'pointer',
                   position: 'relative'
                 }}
@@ -44,7 +53,6 @@ export default function Navbar({ isOpen, handleNavbarBurger }: Props) {
             )}
             
             <NavLink 
-              style={{ marginRight: '20px'}} 
               to={'/basket'}
             >
               <FaShoppingBasket color='#ddd' size={25} />

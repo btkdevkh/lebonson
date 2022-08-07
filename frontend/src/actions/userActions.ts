@@ -16,7 +16,7 @@ import { loginUserServiceApi, registerUserServiceApi, updateUserServiceApi } fro
 
 const loginUser = (userData: IUser) => async (dispatch: AppDispatch) => {
   try {
-    dispatch({ type: USER_LOGIN_REQUEST, payload: null })
+    dispatch({ type: USER_LOGIN_REQUEST, payload: null })    
 
     const data = await loginUserServiceApi(userData)    
 

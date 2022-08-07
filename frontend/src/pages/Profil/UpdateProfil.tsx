@@ -38,6 +38,7 @@ export default function UpdateProfil({ user }: Props) {
     const userData = { firstName, lastName, email, address, zip, city }
     
     dispatch(userActions.updateUser(userData, user.id as number))
+    
     toast.success("Informations mis à jour")
   }
 

@@ -6,10 +6,10 @@ import HeadingH2 from '../../components/Heading/HeadingH2'
 import UpdateProfil from './UpdateProfil'
 import AuthRequired from '../../hocs/AuthRequired'
 
-function Profil() {
+function Profile() {
   const { user } = useUser()
   const location = useLocation()
-  
+
   return (
     <>
       <section className='user-infos-container'>
@@ -22,15 +22,17 @@ function Profil() {
           )}
           
           { user && (
-            <div>
-              <HeadingH2>Mes Informations</HeadingH2>
-              <h4>{user.firstName}</h4>
-              <h4>{user.lastName}</h4>
-              <h4>{user.email}</h4>
-              <h4>{user.address}</h4>
-              <h4>{user.zip}</h4>
-              <h4>{user.city}</h4>
-              <h4>Membre depuis le {moment(user.creationTimestamp).format('L')}</h4>
+            <div className='profile'>
+              <div>
+                <HeadingH2>Mes Informations</HeadingH2>
+                <h4>{user.firstName}</h4>
+                <h4>{user.lastName}</h4>
+                <h4>{user.email}</h4>
+                <h4>{user.address}</h4>
+                <h4>{user.zip}</h4>
+                <h4>{user.city}</h4>
+                <h4>Membre depuis le {moment(user.creationTimestamp).format('L')}</h4>
+              </div>
             </div>
           )}
 
@@ -54,8 +56,8 @@ function Profil() {
             </>
           )}
         </div>
-        
-        {location.pathname === '/compte' && (
+
+        {location.pathname === '/account' && (
           <>
             <br />
             <hr />
@@ -67,4 +69,4 @@ function Profil() {
   )
 }
 
-export default AuthRequired(Profil)
+export default AuthRequired(Profile)

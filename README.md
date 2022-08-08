@@ -14,7 +14,7 @@
 
   3) Create the database name `lebonson` and import all tables in the `sql/lebonson` folder in the `backend` folder into your database
   4) Go to the `frontend` folder and run `npm install`
-  5) Find the `config.ts` file in the `frontend` folder and switch all `API URLS` that have been commented to `localhost` http
+  5) Find the `config.ts` file in the `frontend` folder in `src` folder and switch all `API URLS` that have been commented to `localhost` http
   6) Run `npm run dev` to start testing the project.
 
   ** Note: By default, to test `stripe payment`, enter these credit card fake informations, see photo below :

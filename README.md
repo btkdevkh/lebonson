@@ -19,4 +19,4 @@
 
   ** Note: By default, to test `stripe payment`, enter these credit card fake informations, see photo below :
      
-  ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/stripe-testing.png?raw=true)
+  ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/stripe-testing-en.png?raw=true)

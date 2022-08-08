@@ -6,7 +6,8 @@ export interface IUser {
   password: string
   address?: string
   zip?: number
-  city?: string
+  city?: string,
+  role?: string
 }
 
 export class User implements IUser {
@@ -18,6 +19,7 @@ export class User implements IUser {
   address: string = ''
   zip: number = 0
   city: string = ''
+  role?: string = ''
 
   static hydrateData(data: any) {
     const output = new User()
@@ -33,6 +35,7 @@ export class User implements IUser {
     output.password = data.password ?? ''
     output.zip = data.zip ?? -1
     output.city = data.city ?? ''
+    output.role = data.role ?? ''
 
     return output
   }
@@ -47,6 +50,7 @@ export class User implements IUser {
     output.password = data.password ?? ''
     output.zip = data.zip ?? -1
     output.city = data.city ?? ''
+    output.role = data.role ?? ''
 
     return output
   }

@@ -14,7 +14,7 @@ export default function ProductItem({ product }: Props) {
           <img src={config.API_IMG + product.image} alt={product.title} />
         </div>
         <div className='product-item-description'>
-          <h4>{product.title.length > 20 ? `${product.title.slice(0, 20).toLowerCase()}...` : product.title}</h4>
+          <h4>{product.title.length > 20 ? `${product.title.slice(0, 20)}...` : product.title}</h4>
           <p><b>{product.price.toFixed(2)}€</b></p>
           <p>{product.description.length > 50 ? `${product.description.slice(0, 40)}...` : product.description}</p>
         </div>

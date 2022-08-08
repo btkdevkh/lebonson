@@ -67,8 +67,8 @@ const createOrderPayment = asyncHandler(async(req, res, next) => {
           quantity: Number(product.selectedQuantity)
         }
       })),
-      success_url: `${process.env.CLIENT_URL}/success?o_id=${Number(orderId)}`,
-      cancel_url: `${process.env.CLIENT_URL}/`,
+      success_url: `${process.env.CLIENT_URL || "http://localhost:3000"}/success?o_id=${Number(orderId)}`,
+      cancel_url: `${process.env.CLIENT_URL || "http://localhost:3000"}/`,
     })
 
     res.status(200).json({ url: session.url })

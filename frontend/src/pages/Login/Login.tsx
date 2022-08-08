@@ -6,11 +6,12 @@ import HeadingH2 from "../../components/Heading/HeadingH2";
 import SimpleLink from "../../components/Link/SimpleLink";
 import Spinner from "../../components/Spinner/Spinner";
 import useUser from "../../hooks/useUser";
+import { toast } from 'react-toastify';
 
 export default function Login() {
   const navigate = useNavigate()
 
-  const { user, isLoading, isError, message, dispatch } = useUser()
+  const { user, isLoading, isError, isSuccess, message, dispatch } = useUser()
   
   const [formData, setFormData] = useState({
     email: '',
@@ -38,7 +39,7 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if(user) navigate('/')
+    if(user) navigate('/')    
   }, [user, navigate])
 
   if(isLoading) return <Spinner />

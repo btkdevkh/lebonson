@@ -147,9 +147,11 @@ const getOneUser = asyncHandler(async (req, res) => {
 // @desc update one user's role
 // @route PUT /api/v1/user/update/role/:id
 // @access PRIVATE
-const updateUserRole = asyncHandler(async (req, res) => {
+const updateUserRole = asyncHandler(async(req, res) => {
   const { id } = req.params;
-  await UserModel.updateOneUserRole(req, id);
+  const { role } = req.body
+
+  await UserModel.updateOneUserRole(role, id);
   const userById = await UserModel.getOneUser(id);
 
   if(!userById[0]) {

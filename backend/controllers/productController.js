@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const ProductModel = require("../models/ProductModel")
+const fs = require('fs')
 
 // @desc Create product
 // @route POST /api/v1/product/create
@@ -12,8 +13,9 @@ const createProduct = asyncHandler(async (req, res) => {
     throw new Error('Champs requise')
   }
 
-  const product = await ProductModel.createProduct(req);
-  res.status(201).json(product)
+  const productCreated = await ProductModel.createProduct(req);
+  const product = await ProductModel.getOneProduct(productCreated.insertId);
+  res.status(201).json({ product: product[0] })
 })
 
 // @desc Get all product
@@ -64,22 +66,34 @@ const getProductByOrder = asyncHandler(async (req, res) => {
 // @route PUT /api/v1/product/update/:id
 // @access PRIVATE
 const updateOneProduct = asyncHandler(async (req, res) => {
-  const { title } = req.body;
+  const { id } = req.params
+  const { title, image } = req.body;
 
   if(!title) {
     res.status(400)
     throw new Error('Champs requise')
   }
 
-  const { id } = req.params
-  const product = await ProductModel.updateOneProduct(req, id);
+  const productImg = await ProductModel.getOneProduct(id);
 
-  if(!product) {
+  if(image !== productImg[0].image) {
+    if(productImg[0].image !== 'no-picture.jpg') {
+      fs.unlink(`backend/public/images/${productImg[0].image}`, (err) => {
+        if (err) throw err;
+        console.log('Image product was updated');
+      })
+    }
+  }
+  
+  const productUpdated = await ProductModel.updateOneProduct(req, id);
+
+  if(!productUpdated) {
     res.status(500)
     throw new Error('Server error')
   }
 
-  res.status(200).json({ status: 200, message: "Product updated" });
+  const product = await ProductModel.getOneProduct(id);
+  res.status(200).json({ status: 200, message: "Product updated", product: product[0] });
 })
 
 // @desc Delete one product
@@ -87,9 +101,23 @@ const updateOneProduct = asyncHandler(async (req, res) => {
 // @access PRIVATE
 const deleteOneProduct = asyncHandler(async (req, res) => {
   const id = req.params.id
-  const product = await ProductModel.deleteOneProduct(id);
 
-  if(!product) {
+  const productImg = await ProductModel.getOneProduct(id);
+
+  if(productImg[0].image !== 'no-picture.jpg') {
+    let path = `backend/public/images/${productImg[0].image}`
+
+    if(fs.existsSync(path)) {
+      fs.unlink(path, (err) => {
+        // if(err) throw err;
+        console.log('Image product was deleted');
+      })
+    }
+  }
+  
+  const productDeleted = await ProductModel.deleteOneProduct(id);
+
+  if(!productDeleted) {
     res.status(500)
     throw new Error('Server error')
   }
@@ -100,7 +128,7 @@ const deleteOneProduct = asyncHandler(async (req, res) => {
 // @desc Save product image
 // @route POST /api/v1/product/image
 // @access PRIVATE
-const saveProductImage = asyncHandler( async(req, res, next) => {
+const saveProductImage = asyncHandler(async(req, res) => {
   // console.log("FILES", req.files);
 
   if(!req.files || Object.keys(req.files).length === 0) {
@@ -108,13 +136,15 @@ const saveProductImage = asyncHandler( async(req, res, next) => {
     throw new Error('La photo n\'a pas pu être récupérée')
   } 
 
-  req.files.image.mv('public/images/' + req.files.image.name, (err) => {
+  let imgName = req.body.image_name
+
+  req.files.image.mv(`backend/public/images/${imgName}`, (err) => {
     if(err) {
       res.status(500);
       throw new Error('La photo n\'a pas pu être enregistrée')
     }
 
-    res.status(200).json({ status: 200, url: req.files.image.name });
+    res.status(200).json({ status: 200, url: imgName });
   })
 })
 

@@ -1,15 +1,23 @@
-import '../../assets/css/Profil.css'
+import '../../assets/css/Profile.css'
 import useUser from '../../hooks/useUser'
 import moment from 'moment'
 import { useLocation } from 'react-router-dom'
 import HeadingH2 from '../../components/Heading/HeadingH2'
 import UpdateProfil from './UpdateProfil'
 import AuthRequired from '../../hocs/AuthRequired'
+import userActions from '../../actions/userActions'
 
-function Profil() {
-  const { user } = useUser()
+function Profile() {
   const location = useLocation()
-  
+  const { user, dispatch } = useUser()
+
+  const handleDelete = () => {
+    if(window.confirm('You are about to delete your account ?')) {
+      dispatch(userActions.deleteUser(user.id))
+      dispatch(userActions.logOutUser())
+    }
+  }
+
   return (
     <>
       <section className='user-infos-container'>
@@ -22,15 +30,17 @@ function Profil() {
           )}
           
           { user && (
-            <div>
-              <HeadingH2>Mes Informations</HeadingH2>
-              <h4>{user.firstName}</h4>
-              <h4>{user.lastName}</h4>
-              <h4>{user.email}</h4>
-              <h4>{user.address}</h4>
-              <h4>{user.zip}</h4>
-              <h4>{user.city}</h4>
-              <h4>Membre depuis le {moment(user.creationTimestamp).format('L')}</h4>
+            <div className='profile'>
+              <div>
+                <HeadingH2>Mes Informations</HeadingH2>
+                <h4>{user.firstName}</h4>
+                <h4>{user.lastName}</h4>
+                <h4>{user.email}</h4>
+                <h4>{user.address}</h4>
+                <h4>{user.zip}</h4>
+                <h4>{user.city}</h4>
+                <h4>Membre depuis le {moment(user.creationTimestamp).format('L')}</h4>
+              </div>
             </div>
           )}
 
@@ -54,12 +64,19 @@ function Profil() {
             </>
           )}
         </div>
-        
-        {location.pathname === '/compte' && (
+
+        {location.pathname === '/account' && (
           <>
             <br />
             <hr />
             <UpdateProfil user={user} />
+
+            <button 
+              className='btn btn-danger'
+              onClick={handleDelete}
+            >
+              Delete My Account
+            </button>
           </>
         )}
       </section>
@@ -67,4 +84,4 @@ function Profil() {
   )
 }
 
-export default AuthRequired(Profil)
+export default AuthRequired(Profile)

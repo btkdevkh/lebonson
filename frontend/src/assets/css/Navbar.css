@@ -5,10 +5,11 @@
 }
 
 .navbar .logo {
-  font-size: x-large;
+  font-size: 2rem;
   color: white;
-  font-weight: bold;
-  font-family: 'Megrim', cursive;
+  font-weight: 500;
+  font-family: 'Rajdhani', sans-serif;
+  text-transform: uppercase;
 }
 
 .navbar a {
@@ -37,4 +38,9 @@
   top: 12%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.fa-users,
+.fa-product-hunt {
+  font-size: 1.3rem;
 }

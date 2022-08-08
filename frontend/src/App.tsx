@@ -1,6 +1,9 @@
 import './assets/css/App.css';
 import 'react-toastify/dist/ReactToastify.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
+import { ToastContainer } from 'react-toastify'
+
 import Home from './pages/Home/Home';
 import NotFound from './pages/NotFound/NotFound';
 import Login from './pages/Login/Login';
@@ -12,14 +15,14 @@ import Products from './pages/Product/Products';
 import Register from './pages/Register/Register';
 import ProductDetails from './pages/Product/ProductDetails';
 import NavbarLeft from './components/Navbar/NavbarLeft';
-import { useState } from 'react';
-import Profil from './pages/Profil/Profil';
-import { ToastContainer } from 'react-toastify'
 import ForgotPassword from './pages/Password/ForgotPassword';
-import Payment from './pages/payment/Payment';
-import Success from './pages/payment/Success';
+import Payment from './pages/Payment/Payment';
+import Success from './pages/Payment/Success';
 import Orders from './pages/Order/Orders';
 import ResetPassword from './pages/Password/ResetPassword';
+import AdminProduct from './pages/Admin/Products/AdminProduct';
+import Profile from './pages/Profile/Profile';
+import AdminUser from './pages/Admin/Users/AdminUser';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false)
@@ -29,38 +32,40 @@ function App() {
 
   return (
     <>
-    <BrowserRouter>
-      <Navbar 
-        isOpen={isOpen} 
-        handleNavbarBurger={handleNavbarBurger} 
-      />
-      <NavbarLeft 
-        isOpen={isOpen} 
-        handleCloseNavbarLeft={handleCloseNavbarLeft}
-      />
-      <div className="App">
-        <div className="container">
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/compte' element={<Profil />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/products' element={<Products />} />
-            <Route path='/orders' element={<Orders />} />
-            <Route path='/product/details/:id' element={<ProductDetails />} />
-            <Route path='/basket' element={<Basket />} />
-            <Route path='/payment' element={<Payment />} />
-            <Route path='/success' element={<Success />} />
-            <Route path='/contact' element={<Contact />} />
-            <Route path='/forgot/password/step_one' element={<ForgotPassword />} />
-            <Route path='/forgot/password/step_two/:token' element={<ResetPassword />} />
-            <Route path='*' element={<NotFound />} />
-          </Routes>
+      <BrowserRouter>
+        <Navbar 
+          isOpen={isOpen} 
+          handleNavbarBurger={handleNavbarBurger} 
+        />
+        <NavbarLeft 
+          isOpen={isOpen} 
+          handleCloseNavbarLeft={handleCloseNavbarLeft}
+        />
+        <div className="App">
+          <div className="container">
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/admin/products' element={<AdminProduct />} />
+              <Route path='/admin/users' element={<AdminUser />} />
+              <Route path='/account' element={<Profile />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/products' element={<Products />} />
+              <Route path='/orders' element={<Orders />} />
+              <Route path='/product/details/:id' element={<ProductDetails />} />
+              <Route path='/basket' element={<Basket />} />
+              <Route path='/payment' element={<Payment />} />
+              <Route path='/success' element={<Success />} />
+              <Route path='/contact' element={<Contact />} />
+              <Route path='/forgot/password/step_one' element={<ForgotPassword />} />
+              <Route path='/forgot/password/step_two/:token' element={<ResetPassword />} />
+              <Route path='*' element={<NotFound />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-      <Footer />
-    </BrowserRouter>
-    <ToastContainer />
+        <Footer />
+      </BrowserRouter>
+      <ToastContainer />
     </>
   );
 }

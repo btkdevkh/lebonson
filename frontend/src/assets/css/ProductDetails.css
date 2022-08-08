@@ -7,14 +7,18 @@
 }
 
 .product-details-img {
-  padding: 25px;
+  padding: 20px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
 }
 
 .product-details-img img {
+  display: block;
   width: 100%;
-  height: 150px;
-  object-fit: contain;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .basket {

@@ -1,6 +1,5 @@
 import '../../assets/css/Payment.css'
 import Basket from "../Basket/Basket";
-import Profil from "../Profil/Profil";
 import SimpleLink from "../../components/Link/SimpleLink";
 import { FaHome, FaRegCreditCard } from "react-icons/fa";
 import useUser from "../../hooks/useUser";
@@ -8,6 +7,7 @@ import useBasket from "../../hooks/useBasket";
 import { createCheckoutOrder, createOrder } from "../../api/orderServiceApi";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Profile from '../Profile/Profile';
 
 export default function Payment() {
   const navigate = useNavigate()
@@ -41,7 +41,7 @@ export default function Payment() {
       <SimpleLink to='/' className='mb'><FaHome /> Retour</SimpleLink>
       <div className="payment-flex">
         <Basket />
-        <Profil />
+        <Profile />
       </div>
 
       <br />

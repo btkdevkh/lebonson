@@ -1,0 +1,36 @@
+.admin {
+  position: relative;
+  margin-top: 3rem;
+}
+.add-product {
+  position: absolute;
+  padding: 10px;
+  top: -50px;
+  left: 0;
+  right: 0;
+  background: transparent;
+  font-size: 2rem;
+  cursor: pointer;
+  border: 0;
+}
+.admin img {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: auto;
+}
+.admin .form-group {
+  max-width: 100%;
+}
+
+.admin.user {
+  position: relative;
+  margin-top: 0;
+}
+
+.zeroList {
+  text-align: center;
+  font-weight: bold;
+}

@@ -13,7 +13,7 @@ export default function Products() {
 
   return (
     <>
-      <HeadingH2>Derniers produits</HeadingH2>
+      <HeadingH2>Matos</HeadingH2>
       <section className="products-list">
         { 
           products &&

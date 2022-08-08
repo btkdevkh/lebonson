@@ -19,16 +19,28 @@ export default function Navbar({ isOpen, handleNavbarBurger }: Props) {
     <>
       <nav className='navbar'>
         <div className="container">
-          <Link to={'/'} className="logo"><FaGuitar size={19} /> lebonson</Link>
+          <Link to={'/'} className="logo">lebonmatos</Link>
           <div style={{
-            display: 'flex',
-            alignItems: 'center'
-          }}>
+              display: 'flex',
+              alignItems: 'center',
+              gap: '20px'
+            }}
+          >
+
+            {user && user.role === 'Admin' && (
+              <>
+                <NavLink to={'/admin/users'} title="Admin Users">
+                  <i className="fas fa-users"></i>
+                </NavLink>
+                <NavLink to={'/admin/products'} title="Admin Products">
+                  <i className="fab fa-product-hunt"></i>
+                </NavLink>
+              </>
+            )}
 
             { user && (
               <div 
                 style={{ 
-                  marginRight: '20px',
                   cursor: 'pointer',
                   position: 'relative'
                 }}
@@ -44,7 +56,6 @@ export default function Navbar({ isOpen, handleNavbarBurger }: Props) {
             )}
             
             <NavLink 
-              style={{ marginRight: '20px'}} 
               to={'/basket'}
             >
               <FaShoppingBasket color='#ddd' size={25} />

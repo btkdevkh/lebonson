@@ -64,11 +64,13 @@ const productReducer = (state = initialState, action: Action) => {
         isLoading: true
       }
     case PRODUCT_CREATE_SUCCESS:
+      const createdProduct = state.products.find(x => x.id === action.payload.id)
+
       return {
         ...state,
         isLoading: false,
         isSuccess: true,
-        products: [...state.products, action.payload]
+        products: [...state.products.filter(x => x.id !== createdProduct?.id), action.payload]
       }
     case PRODUCT_CREATE_FAIL:
       return {
@@ -87,9 +89,6 @@ const productReducer = (state = initialState, action: Action) => {
       }
     case PRODUCT_UPDATE_SUCCESS:
       const updatedProduct = state.products.find(x => x.id === action.payload.id)
-      console.log('updatedProduct', updatedProduct);
-      console.log('payload', action.payload);
-
       
       return {
         ...state,

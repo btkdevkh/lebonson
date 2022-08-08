@@ -21,6 +21,7 @@ export default function Orders() {
     <>
       {orders.length > 0 ? (
         <div className="orders-container">
+          <HeadingH2>Mes Commandes :</HeadingH2>
           {orders.map((order: IOrdered) => (
             <OrderItem key={order.id} order={order} />
           ))}

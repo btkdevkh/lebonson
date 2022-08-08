@@ -13,19 +13,18 @@ import {
   PRODUCT_UPDATE_SUCCESS
 } from "../constants/productConstants"
 import { AppDispatch } from "../store"
-import { getProducts } from "../api/productServiceApi"
 import { IProduct } from "../models/lebonson/Product"
 import axios from "axios"
 import { config } from "../config"
+import { headersConfig } from "../helpers/headersConfig"
 
 const loadProducts = () => async (dispatch: AppDispatch) => {
   try {
     dispatch({ type: PRODUCTS_LIST_REQUEST })
 
-    const { products } = await getProducts()
+    const res = await axios.get(`${config.API_URL}/api/v1/product`)
 
-    dispatch({ type: PRODUCTS_LIST_SUCCESS, payload: products })
-    
+    dispatch({ type: PRODUCTS_LIST_SUCCESS, payload: res.data.products })
   } catch (error: any) {
     const message = (
       error.response && 
@@ -41,14 +40,9 @@ const createProduct = (product: IProduct) => async (dispatch: AppDispatch) => {
   try {
     dispatch({ type: PRODUCT_CREATE_REQUEST })
 
-    const user = JSON.parse(localStorage.getItem("user")!);
-    
-    const res = await axios.post(`${config.API_URL}/api/v1/product/create`, product, {
-      headers: { "x-access-token": user.token }
-    })
+    const res = await axios.post(`${config.API_URL}/api/v1/product/create`, product, headersConfig())
 
     dispatch({ type: PRODUCT_CREATE_SUCCESS, payload: res.data.product })
-    
   } catch (error: any) {
     const message = (
       error.response && 
@@ -63,17 +57,10 @@ const createProduct = (product: IProduct) => async (dispatch: AppDispatch) => {
 const updateProduct = (product: IProduct, id: number) => async (dispatch: AppDispatch) => {
   try {
     dispatch({ type: PRODUCT_UPDATE_REQUEST })
-
-    const user = JSON.parse(localStorage.getItem("user")!);
     
-    const res = await axios.put(`${config.API_URL}/api/v1/product/update/${id}`, product, {
-      headers: { "x-access-token": user.token }
-    })
-
-    console.log('RES', res);
+    const res = await axios.put(`${config.API_URL}/api/v1/product/update/${id}`, product, headersConfig())
     
     dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: res.data.product })
-    
   } catch (error: any) {
     const message = (
       error.response && 
@@ -88,12 +75,8 @@ const updateProduct = (product: IProduct, id: number) => async (dispatch: AppDis
 const deleteProduct = (product: IProduct) => async (dispatch: AppDispatch) => {
   try {
     dispatch({ type: PRODUCT_DELETE_REQUEST })
-
-    const user = JSON.parse(localStorage.getItem("user")!);
     
-    await axios.delete(`${config.API_URL}/api/v1/product/delete/${product.id}`, {
-      headers: { "x-access-token": user.token }
-    })
+    await axios.delete(`${config.API_URL}/api/v1/product/delete/${product.id}`, headersConfig())
 
     dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: product })
   } catch (error: any) {

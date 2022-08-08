@@ -1,13 +1,13 @@
-import axios from "axios";
-import { config } from "../config";
 import { 
   PRODUCT_CREATE_IMAGE_FAIL, 
   PRODUCT_CREATE_IMAGE_REQUEST, 
   PRODUCT_CREATE_IMAGE_SUCCESS 
 } from "../constants/uploadConstants";
+import axios from "axios";
+import { config } from "../config";
 import { AppDispatch } from "../store";
 
-const saveProductImage = (dataFile: File) => async (dispatch: AppDispatch) => {
+const saveProductImage = (dataFile: File, imagName: any) => async (dispatch: AppDispatch) => {
   try {
 
     if(dataFile) {
@@ -15,14 +15,16 @@ const saveProductImage = (dataFile: File) => async (dispatch: AppDispatch) => {
 
       let formData = new FormData();
       formData.append('image', dataFile);
+      formData.append('image_name', imagName);
 
-      const response = await axios.post(`${config.API_URL}/api/v1/product/image`, formData, {
+      const res = await axios.post(`${config.API_URL}/api/v1/product/image`, formData, {
         headers: {
           "Content-Type": "multipart/form-data"
-        }
+        },
+        data: imagName
       })
       
-      dispatch({ type: PRODUCT_CREATE_IMAGE_SUCCESS, payload: response })
+      dispatch({ type: PRODUCT_CREATE_IMAGE_SUCCESS, payload: res.data.url })
     }
     
     return

@@ -10,7 +10,7 @@ type Props = {
 }
 
 export default function UpdateProfil({ user }: Props) {  
-  const { isLoading, isError, isSuccess, message, dispatch } = useUser()
+  const { isLoading, dispatch } = useUser()
   
   const [formData, setFormData] = useState({
     firstName: user ? user.firstName : '',

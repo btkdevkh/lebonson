@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
-import HeadingH2 from "../../components/Heading/HeadingH2";
-import productActions from '../../actions/productActions'
-import uploadActions from '../../actions/uploadActions'
-import useUpload from "../../hooks/useUpload";
+import HeadingH2 from "../../../components/Heading/HeadingH2";
+import productActions from '../../../actions/productActions'
+import uploadActions from '../../../actions/uploadActions'
+import useUpload from "../../../hooks/useUpload";
 import { toast } from "react-toastify";
-import useProduct from "../../hooks/useProduct";
-import { IProduct } from "../../models/lebonson/Product";
+import { IProduct } from "../../../models/lebonson/Product";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
   product: IProduct | null
 }
 
-export default function FormCreate({ product }: Props) {  
+export default function FormAdminProduct({ product }: Props) {  
   const { dispatch } = useUpload()
   const navigate = useNavigate()
 
@@ -37,10 +36,10 @@ export default function FormCreate({ product }: Props) {
       setImageError('Please select only JPG, JPEG or PNG format')
       return
     }
-    
-    setImage(selectedFile.name)
+
+    setImage(`${Date.now()}.${selectedFile.name.split('.')[1]}`)
     setFile(selectedFile)
-    setImageError('')
+    setImageError('')    
   }
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -50,12 +49,12 @@ export default function FormCreate({ product }: Props) {
       title,
       price,
       quantity,
-      image: image ? image : 'no-picture.png',
+      image: image ? image : 'no-picture.jpg',
       description
     }
 
     // upload Image
-    dispatch(uploadActions.saveProductImage(file as File))
+    dispatch(uploadActions.saveProductImage(file as File, image))
 
     // Update Product
     if(product) {
@@ -93,7 +92,9 @@ export default function FormCreate({ product }: Props) {
           />
         </div>
         <div className="form-control">
+          <label htmlFor="price">Price</label>
           <input 
+            id='price'
             type="number" 
             placeholder="Price" 
             value={price}
@@ -102,7 +103,9 @@ export default function FormCreate({ product }: Props) {
           />
         </div>
         <div className="form-control">
+          <label htmlFor="quantity">Quantity</label>
           <input 
+            id="quantity"
             type="number" 
             placeholder="Quantity" 
             value={quantity}
@@ -113,7 +116,7 @@ export default function FormCreate({ product }: Props) {
         <div className="form-control">
           <textarea 
             placeholder="Description" 
-            rows={3}
+            rows={5}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           >
@@ -127,7 +130,7 @@ export default function FormCreate({ product }: Props) {
             onChange={handleFileChange}
           />
           <div>
-            Image present in DB: <> </>
+            Image in database : <> </>
             {
               product ? 
               <em><strong>{image}</strong></em> : 
@@ -137,8 +140,6 @@ export default function FormCreate({ product }: Props) {
           <div className="error mb mt">{imageError && imageError}</div>
         </div>
         <button type="submit" className="btn btn-block mb">Valider</button>
-
-        {/* <div className="error mb">{isError && message}</div> */}
       </form>
     </div>
   )

@@ -19,7 +19,7 @@ export default function Navbar({ isOpen, handleNavbarBurger }: Props) {
     <>
       <nav className='navbar'>
         <div className="container">
-          <Link to={'/'} className="logo"><FaGuitar size={19} /> lebonson</Link>
+          <Link to={'/'} className="logo">lebonmatos</Link>
           <div style={{
               display: 'flex',
               alignItems: 'center',
@@ -28,11 +28,14 @@ export default function Navbar({ isOpen, handleNavbarBurger }: Props) {
           >
 
             {user && user.role === 'Admin' && (
-              <li>
-                <NavLink to={'/admin'} title="Administration">
-                  <i className="fas fa-user-shield"></i>
+              <>
+                <NavLink to={'/admin/users'} title="Admin Users">
+                  <i className="fas fa-users"></i>
                 </NavLink>
-              </li>
+                <NavLink to={'/admin/products'} title="Admin Products">
+                  <i className="fab fa-product-hunt"></i>
+                </NavLink>
+              </>
             )}
 
             { user && (

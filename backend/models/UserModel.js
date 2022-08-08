@@ -46,8 +46,8 @@ class UserModel {
       .catch(err => err)
   }
 
-  static updateOneUserRole(req, id) {
-    return db.query("UPDATE user SET role = ? WHERE id = ?", [req.body.userRole, id])
+  static updateOneUserRole(role, id) {
+    return db.query("UPDATE user SET role = ? WHERE id = ?", [role, id])
       .then(res => res)
       .catch(err => err)
   }

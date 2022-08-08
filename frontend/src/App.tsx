@@ -15,13 +15,14 @@ import Products from './pages/Product/Products';
 import Register from './pages/Register/Register';
 import ProductDetails from './pages/Product/ProductDetails';
 import NavbarLeft from './components/Navbar/NavbarLeft';
-import Profile from './pages/Profil/Profile';
 import ForgotPassword from './pages/Password/ForgotPassword';
-import Payment from './pages/payment/Payment';
-import Success from './pages/payment/Success';
+import Payment from './pages/Payment/Payment';
+import Success from './pages/Payment/Success';
 import Orders from './pages/Order/Orders';
 import ResetPassword from './pages/Password/ResetPassword';
-import Admin from './pages/admin/Admin';
+import AdminProduct from './pages/Admin/Products/AdminProduct';
+import Profile from './pages/Profile/Profile';
+import AdminUser from './pages/Admin/Users/AdminUser';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false)
@@ -44,7 +45,8 @@ function App() {
           <div className="container">
             <Routes>
               <Route path='/' element={<Home />} />
-              <Route path='/admin' element={<Admin />} />
+              <Route path='/admin/products' element={<AdminProduct />} />
+              <Route path='/admin/users' element={<AdminUser />} />
               <Route path='/account' element={<Profile />} />
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />

@@ -69,8 +69,6 @@ const updateOneProduct = asyncHandler(async (req, res) => {
   const { id } = req.params
   const { title, image } = req.body;
 
-  console.log("IMAGE", image);
-
   if(!title) {
     res.status(400)
     throw new Error('Champs requise')
@@ -79,10 +77,12 @@ const updateOneProduct = asyncHandler(async (req, res) => {
   const productImg = await ProductModel.getOneProduct(id);
 
   if(image !== productImg[0].image) {
-    fs.unlink(`backend/public/images/${productImg[0].image}`, (err) => {
-      if (err) throw err;
-      console.log('Image product was updated');
-    })
+    if(productImg[0].image !== 'no-picture.jpg') {
+      fs.unlink(`backend/public/images/${productImg[0].image}`, (err) => {
+        if (err) throw err;
+        console.log('Image product was updated');
+      })
+    }
   }
   
   const productUpdated = await ProductModel.updateOneProduct(req, id);
@@ -101,6 +101,20 @@ const updateOneProduct = asyncHandler(async (req, res) => {
 // @access PRIVATE
 const deleteOneProduct = asyncHandler(async (req, res) => {
   const id = req.params.id
+
+  const productImg = await ProductModel.getOneProduct(id);
+
+  if(productImg[0].image !== 'no-picture.jpg') {
+    let path = `backend/public/images/${productImg[0].image}`
+
+    if(fs.existsSync(path)) {
+      fs.unlink(path, (err) => {
+        // if(err) throw err;
+        console.log('Image product was deleted');
+      })
+    }
+  }
+  
   const productDeleted = await ProductModel.deleteOneProduct(id);
 
   if(!productDeleted) {
@@ -122,13 +136,15 @@ const saveProductImage = asyncHandler(async(req, res) => {
     throw new Error('La photo n\'a pas pu être récupérée')
   } 
 
-  req.files.image.mv('backend/public/images/' + req.files.image.name, (err) => {
+  let imgName = req.body.image_name
+
+  req.files.image.mv(`backend/public/images/${imgName}`, (err) => {
     if(err) {
       res.status(500);
       throw new Error('La photo n\'a pas pu être enregistrée')
     }
 
-    res.status(200).json({ status: 200, url: req.files.image.name });
+    res.status(200).json({ status: 200, url: imgName });
   })
 })
 

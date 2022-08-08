@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Megrim&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap');
 
 *, *::after, *::before {
   margin: 0;
@@ -9,8 +10,7 @@
 
 body {
   position: relative;
-  min-width: 400px;
-  margin: 0;
+  min-width: 320px;
   font-family: 'Montserrat', sans-serif;
   line-height: 1.5;
 }
@@ -110,6 +110,7 @@ select {
 }
 
 .btn-danger {
+  color: white;
   width: 100%;
   display: block;
   background-color: darkred;

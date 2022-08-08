@@ -3,9 +3,9 @@ import { RootState } from "../store"
 
 function useUpload() {
   const dispatch = useDispatch()
-  const { isLoading, isUploadSuccess } = useSelector((state: RootState) => state.upload)
+  const { imgUrl, isLoading, isUploadSuccess } = useSelector((state: RootState) => state.upload)
 
-  return { isLoading, isUploadSuccess, dispatch }
+  return { imgUrl, isLoading, isUploadSuccess, dispatch }
 }
 
 export default useUpload

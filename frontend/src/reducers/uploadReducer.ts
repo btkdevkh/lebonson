@@ -11,6 +11,7 @@ interface Action {
 }
 
 const initailState = {
+  imgUrl: null,
   isLoading: false,
   isUploadSuccess: false
 }
@@ -26,12 +27,14 @@ const uploadReducer = (state = initailState, action: Action) => {
         ...state,
         isLoading: false,
         isUploadSuccess: true,
+        imgUrl: action.payload
       }
     case PRODUCT_CREATE_IMAGE_FAIL:
       return {
         ...state,
         isLoading: false,
-        isUploadSuccess: false
+        isUploadSuccess: false,
+        imgUrl: action.payload
       }
     default:
       return state

@@ -1,14 +1,22 @@
-import '../../assets/css/Profil.css'
+import '../../assets/css/Profile.css'
 import useUser from '../../hooks/useUser'
 import moment from 'moment'
 import { useLocation } from 'react-router-dom'
 import HeadingH2 from '../../components/Heading/HeadingH2'
 import UpdateProfil from './UpdateProfil'
 import AuthRequired from '../../hocs/AuthRequired'
+import userActions from '../../actions/userActions'
 
 function Profile() {
-  const { user } = useUser()
   const location = useLocation()
+  const { user, dispatch } = useUser()
+
+  const handleDelete = () => {
+    if(window.confirm('You are about to delete your account ?')) {
+      dispatch(userActions.deleteUser(user.id))
+      dispatch(userActions.logOutUser())
+    }
+  }
 
   return (
     <>
@@ -62,6 +70,13 @@ function Profile() {
             <br />
             <hr />
             <UpdateProfil user={user} />
+
+            <button 
+              className='btn btn-danger'
+              onClick={handleDelete}
+            >
+              Delete My Account
+            </button>
           </>
         )}
       </section>

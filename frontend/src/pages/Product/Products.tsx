@@ -18,7 +18,7 @@ export default function Products() {
         { 
           products &&
           products.map((product: IProduct) => (
-            <Link key={product.id} to={`/product/details/${product.id}`}>
+            <Link key={product.id} to={`/products/${product.id}`}>
               <ProductItem product={product} />
             </Link>
           ))

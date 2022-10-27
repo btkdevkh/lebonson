@@ -14,8 +14,14 @@ const createProduct = asyncHandler(async (req, res) => {
   }
 
   const productCreated = await ProductModel.createProduct(req);
-  const product = await ProductModel.getOneProduct(productCreated.insertId);
-  res.status(201).json({ product: product[0] })
+
+  if(!productCreated) {
+    res.status(401)
+    throw new Error('Server error')
+  }
+
+  console.log('product created');
+  res.status(201).json({ 'msg': 'Product created' })
 })
 
 // @desc Get all product
@@ -24,12 +30,12 @@ const createProduct = asyncHandler(async (req, res) => {
 const getAllProducts = asyncHandler(async (req, res) => {
   const products = await ProductModel.getAllProducts();
 
-  if(!products) {
+  if(!products.rows) {
     res.status(500)
     throw new Error('Erreur du serveur')
   }
 
-  res.status(200).json({ status: 200, products });
+  res.status(200).json({ status: 200, products: products.rows });
 })
 
 // @desc Get one product
@@ -39,12 +45,12 @@ const getOneProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const product = await ProductModel.getOneProduct(id);
 
-  if(!product[0]) {
+  if(!product.rows[0]) {
     res.status(400)
     throw new Error('No product matched')
   }
 
-  res.status(200).json({ status: 200, product: product[0] });
+  res.status(200).json({ status: 200, product: product.rows[0] });
 })
 
 // @desc Get products by order id
@@ -54,12 +60,12 @@ const getProductByOrder = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const productsByOrderId = await ProductModel.getProductsByOrderId(id);
 
-  if(!productsByOrderId.length) {
+  if(!productsByOrderId.rows.length) {
     res.status(400)
     throw new Error('No products by order found')
   }
 
-  res.status(200).json({ status: 200, productsByOrderId: productsByOrderId });
+  res.status(200).json({ status: 200, productsByOrderId: productsByOrderId.rows });
 })
 
 // @desc update one product
@@ -76,9 +82,9 @@ const updateOneProduct = asyncHandler(async (req, res) => {
 
   const productImg = await ProductModel.getOneProduct(id);
 
-  if(image !== productImg[0].image) {
+  if(image !== productImg.rows[0].image) {
     if(productImg[0].image !== 'no-picture.jpg') {
-      fs.unlink(`backend/public/images/${productImg[0].image}`, (err) => {
+      fs.unlink(`backend/public/images/${productImg.rows[0].image}`, (err) => {
         if (err) throw err;
         console.log('Image product was updated');
       })
@@ -87,13 +93,13 @@ const updateOneProduct = asyncHandler(async (req, res) => {
   
   const productUpdated = await ProductModel.updateOneProduct(req, id);
 
-  if(!productUpdated) {
+  if(!productUpdated.rows[0]) {
     res.status(500)
     throw new Error('Server error')
   }
 
   const product = await ProductModel.getOneProduct(id);
-  res.status(200).json({ status: 200, message: "Product updated", product: product[0] });
+  res.status(200).json({ status: 200, message: "Product updated", product: product.rows[0] });
 })
 
 // @desc Delete one product
@@ -104,8 +110,8 @@ const deleteOneProduct = asyncHandler(async (req, res) => {
 
   const productImg = await ProductModel.getOneProduct(id);
 
-  if(productImg[0].image !== 'no-picture.jpg') {
-    let path = `backend/public/images/${productImg[0].image}`
+  if(productImg.rows[0].image !== 'no-picture.jpg') {
+    let path = `backend/public/images/${productImg.rows[0].image}`
 
     if(fs.existsSync(path)) {
       fs.unlink(path, (err) => {

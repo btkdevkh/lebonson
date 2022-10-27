@@ -1,67 +1,59 @@
 const bcrypt = require('bcrypt')
-const mysql = require('../config/db')
-
-let db;
-
-mysql.then(conn => {
-  setInterval(async() => {
-    await conn.query("SELECT 1");
-  }, 10000);
-
-  db = conn
-})
+const db = require('../config/db')
 
 const saltRounds = 10;
 
 class UserModel {
   static async createUser(req) {
-    const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+    const { firstName, lastName, email, password, address, zip, city } = req.body
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    return db.query("INSERT INTO user (firstName, lastName, email, password, address, zip, city, creationTimestamp, role) VALUES(?, ?, ?, ?, ?, ?, ?, NOW(), 'User')", [req.body.firstName, req.body.lastName, req.body.email, hashedPassword, req.body.address, req.body.zip, req.body.city])
+    return db.query("INSERT INTO user_lbs (firstName, lastName, email, password, address, zip, city, creationtimestamp, role) VALUES($1, $2, $3, $4, $5, $6, $7, NOW(), 'User') RETURNING *", [firstName, lastName, email, hashedPassword, address, zip, city])
       .then(res => res)
       .catch(err => err)
   }
 
   static getAllUsers() {
-    return db.query("SELECT * FROM user")
+    return db.query("SELECT * FROM user_lbs")
       .then(res => res)
       .catch(err => err)
   }
 
   static getOneUser(id) {
-    return db.query("SELECT * FROM user WHERE id = ?", [id])
+    return db.query("SELECT * FROM user_lbs WHERE id = $1", [id])
       .then(res => res)
       .catch(err => err)
   }
 
   static getUserByEmail(email) {
-    return db.query("SELECT * FROM user WHERE email = ?", [email])
+    return db.query("SELECT * FROM user_lbs WHERE email = $1", [email])
       .then(res => res)
       .catch(err => err)
   }
 
   static updateOneUser(req, id) {
-    return db.query("UPDATE user SET firstName = ?, lastName = ?, email = ?, address = ?, zip = ?, city = ? WHERE id = ?", [req.body.firstName, req.body.lastName, req.body.email, req.body.address, req.body.zip, req.body.city, id])
+    const { firstName, lastName, email, address, zip, city } = req.body
+    return db.query("UPDATE user SET firstName = $1, lastName = $2, email = $3, address = $4, zip = $5, city = $6 WHERE id = $7", [firstName, lastName, email, address, zip, city, id])
       .then(res => res)
       .catch(err => err)
   }
 
   static updateOneUserRole(role, id) {
-    return db.query("UPDATE user SET role = ? WHERE id = ?", [role, id])
+    return db.query("UPDATE user SET role = $1 WHERE id = $2", [role, id])
       .then(res => res)
       .catch(err => err)
   }
 
-  static async updateUserPassword(req, id) {
-    const hash = await bcrypt.hash(req, saltRounds);
+  static async updateUserPassword(password, id) {
+    const hash = await bcrypt.hash(password, saltRounds);
     
-    return db.query("UPDATE user SET password = ? WHERE id = ?", [hash, id])
+    return db.query("UPDATE user SET password = $1 WHERE id = $2", [hash, id])
       .then(res => res)
       .catch(err => err)
   }
 
   static deleteOneUser(id) {
-    return db.query("DELETE FROM user WHERE id = ?", [id])
+    return db.query("DELETE FROM user WHERE id = $1", [id])
       .then(res => res)
       .catch(err => err)
   }

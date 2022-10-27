@@ -53,13 +53,14 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('Champs requise');
   }
 
-  const userExists = await UserModel.getUserByEmail(email);
+  // const userExists = await UserModel.getUserByEmail(email);
+  // console.log("userExists", userExists);
 
   // Verify user exists
-  if(userExists.length !== 0) {
-    res.status(400);
-    throw new Error('Utilisateur existe déja');
-  }
+  // if(userExists.length !== 0) {
+  //   res.status(400);
+  //   throw new Error('Utilisateur existe déja');
+  // }
 
   if(password !== confirmPassword) {
     res.status(400);
@@ -73,15 +74,15 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('Erreur du serveur');
   }
 
-  const userRegistered = await UserModel.getOneUser(user.insertId);
+  const userRegistered = await UserModel.getOneUser(user.rows[0].id);
 
   // Generate token
-  const payload = { email: email, id: user.insertId }
+  const payload = { email: email, id: userRegistered.rows[0].id }
   res.status(201).json({ 
     status: 201, 
     message: "Votre compte a été créé avec success", 
     token: generateToken(payload),
-    user: userRegistered[0]
+    user: userRegistered.rows[0]
   });
 })
 

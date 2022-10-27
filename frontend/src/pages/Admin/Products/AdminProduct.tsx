@@ -85,7 +85,7 @@ function AdminProduct() {
             ))}
           </tbody>
         </table>
-      ) : <div className='zeroList'>Il n'y a pas de matos</div>}
+      ) : <div className='zeroList'>Il n'y a pas de produit, ajoutez en !</div>}
 
       {/* Create Product */}
       {isCreate && <FormAdminProduct product={null} />}

@@ -1,4 +1,4 @@
-# lebonson, projet personnel FullStack Node + React/TS
+# lebonson, Graduation projet FullStack Node API + React/TS
 
 ## Testing this project with localhost
 

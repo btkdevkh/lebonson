@@ -19,7 +19,7 @@ export default function Navbar({ isOpen, handleNavbarBurger }: Props) {
     <>
       <nav className='navbar'>
         <div className="container">
-          <Link to={'/'} className="logo">lebonmatos</Link>
+          <Link to={'/'} className="logo">lebonson</Link>
           <div style={{
               display: 'flex',
               alignItems: 'center',

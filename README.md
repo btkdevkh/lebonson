@@ -1,4 +1,4 @@
-# lebonson, Graduation projet FullStack Node API + React/TS
+# LEBONSON, Graduation Projet FullStack Node API PostgreSQL + React/TS
 
 ## Testing this project with localhost
 
@@ -12,11 +12,17 @@
     - MY_PASSWORD=YOUR_OUTLOOK_GENERATED_PASSWORD
     - STRIPE_PRIVATE_KEY=YOUR_TESTING_STRIPE_PRIVATE_KEY
 
-  3) Create the database name `lebonson` and import all tables in the `sql/lebonson` folder in the `backend` folder into your database
+  3) Create the database name `lebonson` and import `lebonson.sql` file in the `sql/lebonson` folder in the `backend` folder into your database
   4) Go to the `frontend` folder and run `npm install`
   5) Find the `config.ts` file in the `frontend` folder in `src` folder and switch all `API URLS` that have been commented to `localhost` http
   6) Run `npm run dev` to start testing the project.
+     
+  ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_1.jpg?raw=true)
+  ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_2.jpg?raw=true)
+  ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_3.jpg?raw=true)
+  ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_4.jpg?raw=true)
+  ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_5.jpg?raw=true)
 
   ** Note: By default, to test `stripe payment`, enter these credit card fake informations, see photo below :
-     
+
   ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/stripe-testing-en.png?raw=true)

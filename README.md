@@ -24,7 +24,7 @@
   ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_2.jpg?raw=true)
 
   - Cart items
-  ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_3.jpg?raw=true)
+  ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_m_3.jpg?raw=true)
 
   - Payment test by stripe
   ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_4.jpg?raw=true)

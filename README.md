@@ -16,13 +16,21 @@
   4) Go to the `frontend` folder and run `npm install`
   5) Find the `config.ts` file in the `frontend` folder in `src` folder and switch all `API URLS` that have been commented to `localhost` http
   6) Run `npm run dev` to start testing the project.
-     
+  
+  - Show items
   ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_1.jpg?raw=true)
+
+  - Add to cart
   ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_2.jpg?raw=true)
+
+  - Cart items
   ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_3.jpg?raw=true)
+
+  - Payment test by stripe
   ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_4.jpg?raw=true)
+
+  - Administration
   ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/covers/lbs_5.jpg?raw=true)
 
   ** Note: By default, to test `stripe payment`, enter these credit card fake informations, see photo below :
-
   ![alt text](https://github.com/btkdevkh/lebonson/blob/main/frontend/src/assets/img/stripe-testing-en.png?raw=true)

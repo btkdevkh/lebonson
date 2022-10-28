@@ -21,11 +21,11 @@ const createProduct = asyncHandler(async (req, res) => {
   }
 
   console.log('product created');
-  res.status(201).json({ 'msg': 'Product created' })
+  res.status(201).json({ 'msg': 'Product created', 'product': productCreated.rows[0] })
 })
 
 // @desc Get all product
-// @route GET /api/v1/product/all
+// @route GET /api/v1/product
 // @access PUBLIC
 const getAllProducts = asyncHandler(async (req, res) => {
   const products = await ProductModel.getAllProducts();

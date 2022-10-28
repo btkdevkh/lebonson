@@ -5,10 +5,10 @@ const saltRounds = 10;
 
 class UserModel {
   static async createUser(req) {
-    const { firstName, lastName, email, password, address, zip, city } = req.body
+    const { firstname, lastname, email, password, address, zip, city } = req.body
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    return db.query("INSERT INTO user_lbs (firstName, lastName, email, password, address, zip, city, creationtimestamp, role) VALUES($1, $2, $3, $4, $5, $6, $7, NOW(), 'User') RETURNING *", [firstName, lastName, email, hashedPassword, address, zip, city])
+    return db.query("INSERT INTO user_lbs (firstname, lastname, email, password, address, zip, city, creationtimestamp, role) VALUES($1, $2, $3, $4, $5, $6, $7, NOW(), 'User') RETURNING *", [firstname, lastname, email, hashedPassword, address, zip, city])
       .then(res => res)
       .catch(err => err)
   }
@@ -32,14 +32,14 @@ class UserModel {
   }
 
   static updateOneUser(req, id) {
-    const { firstName, lastName, email, address, zip, city } = req.body
-    return db.query("UPDATE user SET firstName = $1, lastName = $2, email = $3, address = $4, zip = $5, city = $6 WHERE id = $7", [firstName, lastName, email, address, zip, city, id])
+    const { firstname, lastname, email, address, zip, city } = req.body
+    return db.query("UPDATE user_lbs SET firstname = $1, lastname = $2, email = $3, address = $4, zip = $5, city = $6 WHERE id = $7", [firstname, lastname, email, address, zip, city, id])
       .then(res => res)
       .catch(err => err)
   }
 
   static updateOneUserRole(role, id) {
-    return db.query("UPDATE user SET role = $1 WHERE id = $2", [role, id])
+    return db.query("UPDATE user_lbs SET role = $1 WHERE id = $2", [role, id])
       .then(res => res)
       .catch(err => err)
   }
@@ -47,13 +47,13 @@ class UserModel {
   static async updateUserPassword(password, id) {
     const hash = await bcrypt.hash(password, saltRounds);
     
-    return db.query("UPDATE user SET password = $1 WHERE id = $2", [hash, id])
+    return db.query("UPDATE user_lbs SET password = $1 WHERE id = $2", [hash, id])
       .then(res => res)
       .catch(err => err)
   }
 
   static deleteOneUser(id) {
-    return db.query("DELETE FROM user WHERE id = $1", [id])
+    return db.query("DELETE FROM user_lbs WHERE id = $1", [id])
       .then(res => res)
       .catch(err => err)
   }

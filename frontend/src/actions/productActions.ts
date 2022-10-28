@@ -22,7 +22,7 @@ const loadProducts = () => async (dispatch: AppDispatch) => {
   try {
     dispatch({ type: PRODUCTS_LIST_REQUEST })
 
-    const res = await axios.get(`${config.API_URL}/api/v1/product`)
+    const res = await axios.get(`${config.API_URL}/api/v1/product`)    
 
     dispatch({ type: PRODUCTS_LIST_SUCCESS, payload: res.data.products })
   } catch (error: any) {
@@ -41,7 +41,7 @@ const createProduct = (product: IProduct) => async (dispatch: AppDispatch) => {
     dispatch({ type: PRODUCT_CREATE_REQUEST })
 
     const res = await axios.post(`${config.API_URL}/api/v1/product/create`, product, headersConfig())
-
+    
     dispatch({ type: PRODUCT_CREATE_SUCCESS, payload: res.data.product })
   } catch (error: any) {
     const message = (
@@ -86,7 +86,7 @@ const deleteProduct = (product: IProduct) => async (dispatch: AppDispatch) => {
       error.response.data.message
     ) || error.message || error.toString()
     
-    dispatch({ type: PRODUCT_DELETE_FAIL, payload: message})
+    dispatch({ type: PRODUCT_DELETE_FAIL, payload: message })
   }
 }
 

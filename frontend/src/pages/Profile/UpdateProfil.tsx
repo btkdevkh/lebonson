@@ -9,19 +9,19 @@ type Props = {
   user: IUser
 }
 
-export default function UpdateProfil({ user }: Props) {  
+export default function UpdateProfil({ user }: Props) {    
   const { isLoading, dispatch } = useUser()
   
   const [formData, setFormData] = useState({
-    firstName: user ? user.firstName : '',
-    lastName: user ? user.lastName : '',
+    firstname: user ? user.firstname : '',
+    lastname: user ? user.lastname : '',
     email: user ? user.email : '',
     address: user ? user.address : '',
     zip: user ? user.zip : '',
     city: user ? user.city : ''
   })
 
-  const { firstName, lastName, email, address, zip, city } = formData
+  const { firstname, lastname, email, address, zip, city } = formData
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
     setFormData((oldState) => {
@@ -35,7 +35,7 @@ export default function UpdateProfil({ user }: Props) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const userData = { firstName, lastName, email, address, zip, city }
+    const userData = { firstname, lastname, email, address, zip, city }
     
     dispatch(userActions.updateUser(userData, user.id as number))
     
@@ -51,8 +51,8 @@ export default function UpdateProfil({ user }: Props) {
           <input 
             type="text" 
             placeholder="Prénom" 
-            name="firstName"
-            value={firstName}
+            name="firstname"
+            value={firstname}
             onChange={onChange}
           />
         </div>
@@ -60,8 +60,8 @@ export default function UpdateProfil({ user }: Props) {
           <input 
             type="text" 
             placeholder="Nom"
-            name="lastName"
-            value={lastName}
+            name="lastname"
+            value={lastname}
             onChange={onChange}
           />
         </div>

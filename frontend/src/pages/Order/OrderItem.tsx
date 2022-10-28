@@ -10,9 +10,9 @@ export default function OrderItem({ order }: Props) {
     <div className="order-item">
       <p>Commande numéro : #{order.id}</p>
       <hr />
-      <p>Totals prix de la commande : {order.totalAmount}€</p>
+      <p>Totals prix de la commande : {order.totalamount}€</p>
       <hr />
-      <p>Commande effectuée le {moment(order.creationTimestamp).format('L')}</p>
+      <p>Commande effectuée le {moment(order.creationtimestamp).format('L')}</p>
       <hr />
       <p>Statut : {order.status === 'Paid' && 'Payé'}</p>
     </div>

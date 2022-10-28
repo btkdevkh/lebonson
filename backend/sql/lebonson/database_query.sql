@@ -1,13 +1,13 @@
 CREATE TABLE "user_lbs" (
   id SERIAL PRIMARY KEY,
-  firstName VARCHAR(255) NOT NULL,
-  lastName VARCHAR(255) NOT NULL,
+  firstname VARCHAR(255) NOT NULL,
+  lastname VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   address VARCHAR(255) NOT NULL,
   zip int NOT NULL,
   city VARCHAR(255) NOT NULL,
-  creationTimestamp TIMESTAMP,
+  creationtimestamp TIMESTAMP,
   role VARCHAR(255) NOT NULL
 );
 
@@ -17,7 +17,7 @@ CREATE TABLE "product_lbs" (
   price float NOT NULL,
   image varchar(90) NOT NULL,
   quantity int NOT NULL,
-  creationTimestamp TIMESTAMP NOT NULL,
+  creationtimestamp TIMESTAMP NOT NULL,
   description text NOT NULL
 );
 
@@ -25,7 +25,7 @@ CREATE TABLE "orders_lbs" (
   id SERIAL PRIMARY KEY,
   user_id int NOT NULL,
   totalAmount float NOT NULL,
-  creationTimestamp TIMESTAMP NOT NULL,
+  creationtimestamp TIMESTAMP NOT NULL,
   status varchar(45) NOT NULL
 );
 

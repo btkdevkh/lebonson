@@ -17,7 +17,7 @@ const createOrder = asyncHandler(async (req, res) => {
     throw new Error('Server error');
   }
 
-  let order_id = order.insertId
+  let order_id = order.rows[0].id
 
   let products = req.body.products;
 
@@ -28,7 +28,7 @@ const createOrder = asyncHandler(async (req, res) => {
     let TVA = 0.5
 
     // Total price HT
-    let totalEachHT = Number(productInfo[0].price) * Number(product.selectedQuantity);
+    let totalEachHT = Number(productInfo.rows[0].price) * Number(product.selectedQuantity);
 
     let totaEachlTTC = (TVA * Number(product.selectedQuantity) + totalEachHT)
 
@@ -38,7 +38,7 @@ const createOrder = asyncHandler(async (req, res) => {
     await OrderModel.updateTotalAmount(totalAmounts, order_id);
   }))
 
-  res.status(200).json({ status: 200, message: "Order created", order: order, order_id: order_id });
+  res.status(200).json({ status: 200, message: "Order created", order: order.rows[0], order_id: order_id });
 })
 
 // @desc Create order checkout payment
@@ -62,7 +62,7 @@ const createOrderPayment = asyncHandler(async(req, res, next) => {
             product_data: {
               name: product.title
             },
-            unit_amount: Number(productInfo[0].price + TVA) * 100
+            unit_amount: Number(productInfo.rows[0].price + TVA) * 100
           },
           quantity: Number(product.selectedQuantity)
         }
@@ -84,7 +84,7 @@ const createOrderPayment = asyncHandler(async(req, res, next) => {
 const createOrderPaymentOldVersion = asyncHandler(async(req, res, next) => {
   let order = await OrderModel.getOneOrder(req.body.order_id);
 
-  if(!order[0]) {
+  if(!order.rows[0]) {
     res.status(500)
     throw new Error('Server error');
   }
@@ -123,7 +123,7 @@ const validateOrder = asyncHandler(async(req, res, next) => {
     throw new Error('Server error');
   }
 
-  productsOrdered.map(async(product) => {
+  productsOrdered.rows.map(async(product) => {
     let newQantity = parseInt(product.quantity) - parseInt(product.selectedQty);
     await ProductModel.changeProductQuantity(newQantity, product.product_id);
   })
@@ -142,7 +142,7 @@ const getAllOrders = asyncHandler(async (req, res) => {
     throw new Error('Server error');
   }
 
-  res.status(200).json({ status: 200, message: "OK", orders: orders });
+  res.status(200).json({ status: 200, message: "OK", orders: orders.rows });
 })
 
 // @desc Get orders detail by user id
@@ -157,7 +157,7 @@ const getOrderDetailsByUser = asyncHandler(async (req, res) => {
     throw new Error('Server error');
   }
 
-  res.status(200).json({ status: 200, message: "OK", ordersByUserId: ordersByUserId });
+  res.status(200).json({ status: 200, message: "OK", ordersByUserId: ordersByUserId.rows });
 })
 
 // @desc Get one order
@@ -167,12 +167,12 @@ const getOneOrder = asyncHandler(async (req, res) => {
   const id = req.params.id
   const order = await OrderModel.getOneOrder(id);
 
-  if(!order[0]) {
+  if(!order.rows[0]) {
     res.status(500);
     throw new Error('Server error');
   }
 
-  res.status(200).json({ status: 200, message: "OK", order: order[0] });
+  res.status(200).json({ status: 200, message: "OK", order: order.rows[0] });
 })
 
 // @desc update one order
@@ -192,7 +192,7 @@ const updateOneOrder = asyncHandler(async (req, res) => {
     throw new Error('Server error');
   }
 
-  res.status(200).json({ status: 200, message: "Order updated", order: order });
+  res.status(200).json({ status: 200, message: "Order updated", order: order.rows[0] });
 })
 
 // @desc Delete one order
@@ -222,7 +222,7 @@ const getOrderDetailsByOrderCart = asyncHandler(async (req, res) => {
     throw new Error('Server error');
   }
 
-  res.status(200).json({ status: 200, message: "OK", orders: orders});
+  res.status(200).json({ status: 200, message: "OK", orders: orders.rows[0] });
 })
 
 module.exports = {

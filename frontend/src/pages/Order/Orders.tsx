@@ -11,7 +11,7 @@ import { FaHome } from 'react-icons/fa'
 
 export default function Orders() {
   const { user } = useUser()
-  const { orders, dispatch } = useOrder()  
+  const { orders, dispatch } = useOrder()    
 
   useEffect(() => {
     dispatch(orderActions.getOrdersByUserId(user.id))

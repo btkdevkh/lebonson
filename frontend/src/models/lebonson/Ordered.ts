@@ -1,17 +1,17 @@
 export interface IOrdered {
   id?: number
   userId: number
-  totalAmount?: number
+  totalamount?: number
   status?: string,
-  creationTimestamp?: string
+  creationtimestamp?: string
 }
 
 export class Ordered implements IOrdered {
   id?: number = 0
   userId: number = 0
-  totalAmount: number = 0
+  totalamount: number = 0
   status: string = ''
-  creationTimestamp?: string = ''
+  creationtimestamp?: string = ''
 
   static hydrateData(data: any) {
     const output = new Ordered()
@@ -22,9 +22,9 @@ export class Ordered implements IOrdered {
 
     output.id = data.id ?? -1
     output.userId = data.userId ?? -1
-    output.totalAmount = data.totalAmount ?? -1
+    output.totalamount = data.totalamount ?? -1
     output.status = data.status ?? ''
-    output.creationTimestamp = data.creationTimestamp ?? ''
+    output.creationtimestamp = data.creationtimestamp ?? ''
 
     return output
   }
@@ -34,9 +34,9 @@ export class Ordered implements IOrdered {
 
     output.id = data.id ?? -1
     output.userId = data.userId ?? -1
-    output.totalAmount = data.totalAmount ?? -1
+    output.totalamount = data.totalamount ?? -1
     output.status = data.status ?? ''
-    output.creationTimestamp = data.creationTimestamp ?? ''
+    output.creationTimestamp = data.creationtimestamp ?? ''
 
     return output
   }

@@ -9,13 +9,13 @@ export default function Contact() {
   const [msg, setMsg] = useState('')
   const [className, setClassName] = useState('error')
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     email: '',
     message: '',
   })
 
-  const { firstName, lastName, email, message } = formData
+  const { firstname, lastname, email, message } = formData
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
     setFormData({
@@ -28,8 +28,8 @@ export default function Contact() {
     e.preventDefault()
 
     const userData = {
-      firstName,
-      lastName,
+      firstname,
+      lastname,
       email,
       message
     }
@@ -40,8 +40,8 @@ export default function Contact() {
           setMsg('Votre message a bien été envoyé !')
           setClassName('success')
           setFormData({
-            firstName: '',
-            lastName: '',
+            firstname: '',
+            lastname: '',
             email: '',
             message: '',
           })
@@ -65,8 +65,8 @@ export default function Contact() {
           <input 
             type="text" 
             placeholder="Prénom" 
-            name="firstName"
-            value={firstName}
+            name="firstname"
+            value={firstname}
             onChange={onChange}
           />
         </div>
@@ -74,8 +74,8 @@ export default function Contact() {
           <input 
             type="text" 
             placeholder="Nom" 
-            name="lastName"
-            value={lastName}
+            name="lastname"
+            value={lastname}
             onChange={onChange}
           />
         </div>

@@ -2,9 +2,9 @@ const nodemailer = require('nodemailer')
 const asyncHandler = require('express-async-handler')
 
 const contactUs = asyncHandler(async (req, res) => {
-  const { firstName, lastName, email, message } = req.body
+  const { firstname, lastname, email, message } = req.body
 
-  if(!firstName || !lastName || !email || !message) {
+  if(!firstname || !lastname || !email || !message) {
     res.status(400)
     throw new Error("Champs requise")
   }
@@ -26,8 +26,8 @@ const contactUs = asyncHandler(async (req, res) => {
   const output = `
     <h3>Détails du visiteur</h3>
     <ul>
-      <li>Prénom : ${firstName}</li>
-      <li>Nom : ${lastName}</li>
+      <li>Prénom : ${firstname}</li>
+      <li>Nom : ${lastname}</li>
       <li>Email : ${email}</li>
     </ul>
     <p>Message : ${message}</p>

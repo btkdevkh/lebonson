@@ -41,7 +41,7 @@ export default function BasketItem({ basket }: Props) {
 
           <div>
             <div className='updateBtn'>
-              <Link to={`/product/details/${realBaskets.id}`}>
+              <Link to={`/products/${realBaskets.id}`}>
                 <FaPenAlt color='orange' />
               </Link>
             </div>

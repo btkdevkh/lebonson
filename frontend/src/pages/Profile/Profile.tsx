@@ -33,8 +33,8 @@ function Profile() {
             <div className='profile'>
               <div>
                 <HeadingH2>Mes Informations</HeadingH2>
-                <h4>{user.firstName}</h4>
-                <h4>{user.lastName}</h4>
+                <h4>{user.firstname}</h4>
+                <h4>{user.lastname}</h4>
                 <h4>{user.email}</h4>
                 <h4>{user.address}</h4>
                 <h4>{user.zip}</h4>

@@ -1,7 +1,7 @@
 export interface IUser {
   id?: number
-  firstName?: string
-  lastName?: string
+  firstname?: string
+  lastname?: string
   email: string
   password: string
   address?: string
@@ -12,8 +12,8 @@ export interface IUser {
 
 export class User implements IUser {
   id?: number = 0
-  firstName: string = ''
-  lastName: string = ''
+  firstname: string = ''
+  lastname: string = ''
   email: string = ''
   password: string = ''
   address: string = ''
@@ -29,8 +29,8 @@ export class User implements IUser {
     }
 
     output.id = data.id ?? -1
-    output.firstName = data.firstName ?? ''
-    output.lastName = data.lastName ?? ''
+    output.firstname = data.firstname ?? ''
+    output.lastname = data.lastname ?? ''
     output.email = data.email ?? ''
     output.password = data.password ?? ''
     output.zip = data.zip ?? -1
@@ -44,8 +44,8 @@ export class User implements IUser {
     const output: any = {}
 
     output.id = data.id ?? -1
-    output.firstName = data.firstName ?? ''
-    output.lastName = data.lastName ?? ''
+    output.firstname = data.firstname ?? ''
+    output.lastname = data.lastname ?? ''
     output.email = data.email ?? ''
     output.password = data.password ?? ''
     output.zip = data.zip ?? -1

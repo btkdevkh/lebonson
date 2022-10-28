@@ -17,18 +17,18 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const user = await UserModel.getUserByEmail(email);
 
-  if(user.length === 0) {
+  if(user.rows.length === 0) {
     res.status(400);
     throw new Error('Email non reconnu');
   }
 
-  if(!user[0]) {
+  if(!user.rows[0]) {
     res.status(500);
     throw new Error('Erreur du serveur');
   }
 
   // Get user's hashed password & compare
-  const hashPasswordDb = user[0].password;
+  const hashPasswordDb = user.rows[0].password;
   const comparedPassword = await bcrypt.compare(password, hashPasswordDb);
 
   // If wrong password
@@ -38,17 +38,17 @@ const loginUser = asyncHandler(async (req, res) => {
   } 
 
   // Generate token
-  const payload = { email: email, id: user[0].id }
-  res.status(200).json({ status: 200, message: "Authentifié", token: generateToken(payload), user: user[0] })
+  const payload = { email: email, id: user.rows[0].id }
+  res.status(200).json({ status: 200, message: "Authentifié", token: generateToken(payload), user: user.rows[0] })
 })
 
 // @desc Create user
 // @route POST /api/v1/user/
 // @access PUBLIC
 const registerUser = asyncHandler(async (req, res) => {
-  const { firstName, lastName, email, password, confirmPassword, address, zip, city } = req.body;
+  const { firstname, lastname, email, password, confirmPassword, address, zip, city } = req.body;
 
-  if(!firstName || !lastName || !email || !password || !confirmPassword || !address || !zip || !city) {
+  if(!firstname || !lastname || !email || !password || !confirmPassword || !address || !zip || !city) {
     res.status(400);
     throw new Error('Champs requise');
   }
@@ -56,7 +56,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const userExists = await UserModel.getUserByEmail(email);
 
   // Verify user exists
-  if(userExists.length !== 0) {
+  if(userExists.rows.length !== 0) {
     res.status(400);
     throw new Error('Utilisateur existe déja');
   }
@@ -73,15 +73,15 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('Erreur du serveur');
   }
 
-  const userRegistered = await UserModel.getOneUser(user.insertId);
+  const userRegistered = await UserModel.getOneUser(user.rows[0].id);
 
   // Generate token
-  const payload = { email: email, id: user.insertId }
+  const payload = { email: email, id: userRegistered.rows[0].id }
   res.status(201).json({ 
     status: 201, 
     message: "Votre compte a été créé avec success", 
     token: generateToken(payload),
-    user: userRegistered[0]
+    user: userRegistered.rows[0]
   });
 })
 
@@ -89,10 +89,10 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route PUT /api/v1/user/update/:id
 // @access PRIVATE
 const updateOneUser = asyncHandler(async (req, res) => {
-  const { firstName, lastName, email, address, zip, city } = req.body;
+  const { firstname, lastname, email, address, zip, city } = req.body;
   const { id } = req.params;
 
-  if(!firstName || !lastName || !email || !address || !zip || !city) {
+  if(!firstname || !lastname || !email || !address || !zip || !city) {
     res.status(400);
     throw new Error('Champs requise');
   }
@@ -100,18 +100,18 @@ const updateOneUser = asyncHandler(async (req, res) => {
   await UserModel.updateOneUser(req, id);
   const userById = await UserModel.getOneUser(id);
 
-  if(!userById[0]) {
+  if(!userById.rows[0]) {
     res.status(500);
     throw new Error('Erreur du serveur');
   }
 
   // Generate token
-  const payload = { email: email, id: userById[0].id }
+  const payload = { email: email, id: userById.rows[0].id }
   res.status(200).json({ 
     status: 200, 
     message: "Votre profile a été mis à jour", 
     token: generateToken(payload),
-    user: userById[0]
+    user: userById.rows[0]
   })
 })
 
@@ -126,7 +126,7 @@ const getAllUser = asyncHandler(async (req, res) => {
     throw new Error('Erreur du serveur');
   }
 
-  res.status(200).json({ status: 200, users });
+  res.status(200).json({ status: 200, "users": users.rows });
 })
 
 // @desc Get one user
@@ -136,12 +136,12 @@ const getOneUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const user = await UserModel.getOneUser(id);
 
-  if(!user[0]) {
+  if(!user.rows[0]) {
     res.status(400)
     throw new Error('L\'utilisateur n\'existe pas');
   }
 
-  res.status(200).json({ status: 200, user: user[0] });
+  res.status(200).json({ status: 200, user: user.rows[0] });
 })
 
 // @desc update one user's role
@@ -154,12 +154,12 @@ const updateUserRole = asyncHandler(async(req, res) => {
   await UserModel.updateOneUserRole(role, id);
   const userById = await UserModel.getOneUser(id);
 
-  if(!userById[0]) {
+  if(!userById.rows[0]) {
     res.status(500);
     throw new Error('Erreur du serveur');
   }
 
-  res.status(200).json({ status: 200, message: "User's role updated", user: userById[0] });
+  res.status(200).json({ status: 200, message: "User's role updated", user: userById.rows[0] });
 })
 
 // @desc Delete one user
@@ -190,13 +190,13 @@ const resetUserPassStepOne = asyncHandler(async (req, res) => {
 
   const user = await UserModel.getUserByEmail(email);
 
-  if(user.length === 0) {
+  if(user.rows.length === 0) {
     res.status(400);
     throw new Error('Email non reconnu');
   }
 
   // Generate token
-  const payload = { email, id: user[0].id }
+  const payload = { email, id: user.rows[0].id }
     
   const token = generateToken(payload);
   const urlResetPasswordStep2 = process.env.URL_RESET_PASSWORD || "http://localhost:3000/forgot/password/step_two";
@@ -237,7 +237,7 @@ const resetUserPassStepOne = asyncHandler(async (req, res) => {
 
   console.log("Message sent: %s", info.messageId)
 
-  res.status(200).json({ status: 200, message: "Vérifiez dans votre email (couriers indésirables), un lien a été envoyé", token: token, userId: user[0].id })
+  res.status(200).json({ status: 200, message: "Vérifiez dans votre email (couriers indésirables), un lien a été envoyé", token: token, userId: user.rows[0].id })
 })
 
 // @desc Reset user's password end step
@@ -246,9 +246,6 @@ const resetUserPassStepOne = asyncHandler(async (req, res) => {
 const resetUserPassEnd = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { password, confirmPassword } = req.body;
-
-  console.log(password);
-  console.log(confirmPassword);
 
   if(!password || !confirmPassword) {
     res.status(400);
@@ -263,7 +260,7 @@ const resetUserPassEnd = asyncHandler(async (req, res) => {
   await UserModel.updateUserPassword(password, id);
   const userById = await UserModel.getOneUser(id);
 
-  if(!userById[0]) {
+  if(!userById.rows[0]) {
     res.status(500);
     throw new Error('Erreur du serveur');
   } 

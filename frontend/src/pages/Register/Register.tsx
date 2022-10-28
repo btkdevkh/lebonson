@@ -14,8 +14,8 @@ export default function Register() {
   const { user, isLoading, isError, isSuccess, message, dispatch } = useUser()
   
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -37,8 +37,8 @@ export default function Register() {
     e.preventDefault()
 
     const userData = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
+      firstname: formData.firstname,
+      lastname: formData.lastname,
       email: formData.email,
       password: formData.password,
       confirmPassword: formData.confirmPassword,
@@ -68,8 +68,8 @@ export default function Register() {
           <input 
             type="text" 
             placeholder="Prénom" 
-            name="firstName"
-            value={formData.firstName}
+            name="firstname"
+            value={formData.firstname}
             onChange={onChange}
           />
         </div>
@@ -77,8 +77,8 @@ export default function Register() {
           <input 
             type="text" 
             placeholder="Nom"
-            name="lastName"
-            value={formData.lastName}
+            name="lastname"
+            value={formData.lastname}
             onChange={onChange}
           />
         </div>

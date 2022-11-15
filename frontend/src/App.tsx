@@ -13,13 +13,13 @@ import Basket from './pages/Basket/Basket';
 import Contact from './pages/Contact/Contact';
 import Register from './pages/Register/Register';
 import NavbarLeft from './components/Navbar/NavbarLeft';
-import Payment from './pages/Payment/Payment';
-import Success from './pages/Payment/Success';
 import Orders from './pages/Order/Orders';
 import Profile from './pages/Profile/Profile';
 import ProductRoutes from './routes/ProductRoutes';
 import PasswordRoutes from './routes/PasswordRoutes';
 import AdminRoutes from './routes/AdminRoutes';
+import Payment from './pages/payment/Payment';
+import Success from './pages/payment/Success';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false)
